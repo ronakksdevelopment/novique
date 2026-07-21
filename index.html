@@ -13,27 +13,31 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="NoviQue - Designed to Inspire">
 <meta property="og:description" content="An independent design studio crafting thoughtful websites, apps, UI/UX and branding for growing brands.">
-<meta property="og:image" content="https://i.ibb.co/WNtMTYc0/banner-final.png">
-<meta property="og:url" content="https://novique.agency">
+<meta property="og:image" content="https://i.ibb.co/bZ2KDvg/banner-final.png">
+<meta property="og:url" content="https://novique.design">
 <meta property="og:site_name" content="NoviQue">
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="NoviQue - Designed to Inspire">
 <meta name="twitter:description" content="An independent design studio crafting thoughtful websites, apps, UI/UX and branding for growing brands.">
-<meta name="twitter:image" content="https://i.ibb.co/WNtMTYc0/banner-final.png">
+<meta name="twitter:image" content="https://i.ibb.co/bZ2KDvg/banner-final.png">
 
 <!-- Favicon -->
 <link rel="icon" type="image/png" href="https://i.ibb.co/PGpwKRRx/logo-final.png">
 <link rel="apple-touch-icon" href="https://i.ibb.co/PGpwKRRx/logo-final.png">
+<link rel="canonical" href="https://novique.design">
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
 
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+<!-- Spline 3D Viewer (web component, loaded async so it never blocks first paint) -->
+<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js" async></script>
 
 <style>
 /* ============================================
@@ -59,8 +63,8 @@
   --border-soft: #35352F;
   --border-lime: #4C5A22;
 
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-display: 'Permanent Marker', cursive;
+  --font-body: 'Kalam', cursive;
 
   --section-pad: clamp(4rem, 8vw, 7.5rem);
   --container: 1280px;
@@ -84,8 +88,10 @@ body{
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.6;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
   overflow-x: hidden;
   position: relative;
   -webkit-font-smoothing: antialiased;
@@ -142,33 +148,33 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
 .skip-link{
   position:absolute; left:1rem; top:-60px; background:var(--lime); color:#111;
-  padding:0.75rem 1.25rem; border-radius:8px; z-index:999; font-weight:600;
+  padding:0.75rem 1.25rem; border-radius:8px; z-index:999; font-weight:700;
   transition: top .3s var(--ease);
 }
 .skip-link:focus{ top: 1rem; }
 
 h1,h2,h3,h4,h5{
   font-family: var(--font-display);
-  font-weight: 600;
-  line-height: 1.08;
-  letter-spacing: -0.02em;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
   color: var(--white);
 }
-h1{ font-size: clamp(2.4rem, 6vw, 4.6rem); }
-h2{ font-size: clamp(2rem, 4.2vw, 3.1rem); }
-h3{ font-size: clamp(1.3rem, 2.2vw, 1.6rem); }
-p{ color: var(--ink-dim); }
+h1{ font-size: clamp(2.1rem, 5.2vw, 3.9rem); }
+h2{ font-size: clamp(1.75rem, 3.6vw, 2.6rem); }
+h3{ font-size: clamp(1.2rem, 2vw, 1.45rem); }
+p{ color: var(--ink-dim); font-weight: 700; }
 
 .eyebrow{
   display:inline-flex;
   align-items:center;
   gap:0.5rem;
   font-family: var(--font-display);
-  font-size: 0.76rem;
-  letter-spacing: 0.16em;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--lime);
-  font-weight: 500;
+  font-weight: 400;
   margin-bottom: 1.1rem;
 }
 .eyebrow::before{
@@ -238,7 +244,7 @@ p{ color: var(--ink-dim); }
 }
 
 /* ============ ICON ANIMATION SYSTEM ============ */
-/* Every icon in the site gets one of these motion styles instead of a static glyph. */
+/* Scroll-in pop animation (not part of Font Awesome's Animate set, kept custom). */
 @keyframes iconPop{
   0%{ transform: scale(0.5) rotate(-8deg); opacity:0; }
   60%{ transform: scale(1.12) rotate(3deg); opacity:1; }
@@ -246,32 +252,15 @@ p{ color: var(--ink-dim); }
 }
 .icon-anim{ animation: iconPop .5s var(--ease-soft) both; }
 
-@keyframes iconFloat{
-  0%,100%{ transform: translateY(0); }
-  50%{ transform: translateY(-4px); }
-}
-@keyframes iconSway{
-  0%,100%{ transform: rotate(-6deg); }
-  50%{ transform: rotate(6deg); }
-}
-@keyframes iconSpinSlow{
-  from{ transform: rotate(0deg); }
-  to{ transform: rotate(360deg); }
-}
-@keyframes iconPulseScale{
-  0%,100%{ transform: scale(1); }
-  50%{ transform: scale(1.14); }
-}
-@keyframes iconBounceY{
-  0%,100%{ transform: translateY(0); }
-  50%{ transform: translateY(-3px); }
-}
-
-.ico-float{ display:inline-block; animation: iconFloat 2.6s ease-in-out infinite; }
-.ico-sway{ display:inline-block; animation: iconSway 2.2s ease-in-out infinite; transform-origin: 50% 85%; }
-.ico-spin-slow{ display:inline-block; animation: iconSpinSlow 6s linear infinite; }
-.ico-pulse{ display:inline-block; animation: iconPulseScale 1.8s ease-in-out infinite; }
-.ico-bounce{ display:inline-block; animation: iconBounceY 1.6s ease-in-out infinite; }
+/* Font Awesome's real fa-beat / fa-bounce / fa-shake / fa-spin / fa-fade animations
+   ship from the Font Awesome CDN stylesheet loaded in <head> and are applied directly
+   via fa-beat / fa-bounce / fa-shake / fa-spin / fa-fade classes on each <i> icon.
+   Tuned durations/scale per icon using Font Awesome's official CSS custom properties. */
+.fa-beat{ --fa-animation-duration: 1.6s; --fa-beat-scale: 1.15; }
+.fa-bounce{ --fa-animation-duration: 1.4s; }
+.fa-shake{ --fa-animation-duration: 2.4s; }
+.fa-spin{ --fa-animation-duration: 3s; }
+.fa-fade{ --fa-animation-duration: 2.6s; --fa-fade-opacity: 0.4; }
 
 /* Buttons */
 .btn{
@@ -281,7 +270,7 @@ p{ color: var(--ink-dim); }
   justify-content:center;
   gap: 0.6rem;
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 400;
   font-size: 0.95rem;
   padding: 1rem 1.9rem;
   border-radius: var(--radius-full);
@@ -370,8 +359,8 @@ p{ color: var(--ink-dim); }
 .nav-logo-text{
   font-family: var(--font-display);
   font-size: 1.15rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-weight: 400;
+  letter-spacing: 0.01em;
   color: var(--white);
 }
 .nav-logo:hover .nav-logo-mark{ transform: scale(1.06) rotate(-4deg); }
@@ -382,7 +371,7 @@ p{ color: var(--ink-dim); }
 
 .nav-links{
   display:flex; align-items:center; gap: 2rem;
-  font-size: 0.92rem; font-weight:500;
+  font-size: 0.92rem; font-weight:700;
 }
 .nav-links a{
   position:relative; color: var(--ink-dim);
@@ -398,15 +387,28 @@ p{ color: var(--ink-dim); }
 
 .nav-cta{ display:flex; align-items:center; gap:1rem; }
 .nav-toggle{
-  display:none; flex-direction:column; gap:5px; width:26px; z-index:501;
+  display:none; align-items:center; justify-content:center;
+  position:relative; width:26px; height:26px; z-index:501;
 }
-.nav-toggle span{
-  height:2px; width:100%; background: var(--white); border-radius:2px;
-  transition: transform .3s var(--ease), opacity .3s var(--ease);
+.nav-toggle-icon{
+  position:absolute; top:50%; left:50%;
+  font-size:1.3rem; color: var(--white);
+  transform: translate(-50%,-50%) rotate(0deg) scale(1);
+  opacity:1;
+  transition: transform .35s var(--ease), opacity .25s var(--ease);
 }
-.nav-toggle.open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
-.nav-toggle.open span:nth-child(2){ opacity:0; }
-.nav-toggle.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+.nav-toggle .icon-close{
+  opacity:0;
+  transform: translate(-50%,-50%) rotate(-90deg) scale(0.5);
+}
+.nav-toggle.open .icon-open{
+  opacity:0;
+  transform: translate(-50%,-50%) rotate(90deg) scale(0.5);
+}
+.nav-toggle.open .icon-close{
+  opacity:1;
+  transform: translate(-50%,-50%) rotate(0deg) scale(1);
+}
 
 @media (max-width: 980px){
   .nav-links{
@@ -453,7 +455,8 @@ p{ color: var(--ink-dim); }
 .hero h1{ margin-bottom: 1.5rem; }
 .hero h1 .accent{
   color: var(--lime);
-  font-style: italic;
+  display:inline-block;
+  transform: rotate(-3deg);
 }
 .hero-sub{
   font-size: clamp(1rem, 1.4vw, 1.15rem);
@@ -468,19 +471,78 @@ p{ color: var(--ink-dim); }
 }
 .hero-stat b{
   display:block; font-family: var(--font-display); font-size: 1.85rem;
-  color: var(--white); font-weight:600;
+  color: var(--white); font-weight:400;
 }
 .hero-stat span{ font-size:0.8rem; color: var(--ink-faint); }
 
 .hero-visual{
   position:relative; height: clamp(400px, 46vw, 540px);
 }
+
+/* ---------- 3D Spline scene: ambient signature backdrop behind the floating cards ---------- */
+.hero-3d{
+  position:absolute;
+  inset: -8% -6%;
+  z-index: 1;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: radial-gradient(120% 120% at 70% 20%, rgba(134,159,61,0.16), transparent 60%), var(--bg-soft);
+  pointer-events: none;
+}
+.hero-3d spline-viewer{
+  width: 100%; height: 100%; display:block;
+  --spline-icon-color: var(--lime);
+  filter: saturate(1.05);
+  opacity: 0;
+  transition: opacity 1.1s var(--ease);
+}
+.hero-3d spline-viewer.spline-ready{ opacity: 1; }
+.hero-3d::after{
+  /* soft vignette so the scene recedes into the page rather than reading as a pasted iframe */
+  content:'';
+  position:absolute; inset:0;
+  background: radial-gradient(120% 100% at 50% 100%, var(--bg) 0%, transparent 55%);
+  pointer-events:none;
+}
+.hero-3d-fallback{
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  background:
+    radial-gradient(60% 60% at 30% 30%, rgba(182,245,0,0.10), transparent 65%),
+    radial-gradient(50% 50% at 75% 70%, rgba(49,81,30,0.35), transparent 70%),
+    var(--bg-soft);
+}
+.hero-3d-fallback .orb{
+  position:absolute; border-radius:50%;
+  background: linear-gradient(160deg, var(--olive), var(--dark-green));
+  filter: blur(2px);
+  animation: orbFloat 8s ease-in-out infinite;
+  box-shadow: 0 0 60px rgba(182,245,0,0.15);
+}
+.hero-3d-fallback .orb.o1{ width:180px; height:180px; top:12%; left:14%; animation-delay:0s; }
+.hero-3d-fallback .orb.o2{ width:110px; height:110px; bottom:16%; right:18%; background: linear-gradient(160deg, var(--lime), var(--olive)); animation-delay:1.4s; }
+.hero-3d-fallback .orb.o3{ width:70px; height:70px; bottom:32%; left:38%; background: var(--bg-elevated-2); border:1px solid var(--border-lime); animation-delay:0.7s; }
+@keyframes orbFloat{
+  0%,100%{ transform: translateY(0) scale(1); }
+  50%{ transform: translateY(-18px) scale(1.03); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .hero-3d spline-viewer{ display:none; }
+  .hero-3d-fallback{ display:flex !important; }
+  .hero-3d-fallback .orb{ animation:none; }
+}
+@media (max-width: 640px){
+  .hero-3d{ display:none; } /* keep mobile light & fast — cards alone carry the hero */
+}
+
 .hero-card{
   position:absolute; border-radius: var(--radius-md);
   background: var(--bg-elevated);
   border: 1px solid var(--border-soft);
   overflow:hidden;
   animation: floatCard 7s ease-in-out infinite;
+  box-shadow: 0 20px 50px -20px rgba(0,0,0,0.6);
 }
 @keyframes floatCard{
   0%,100%{ transform: translateY(0px) rotate(var(--rot,0deg)); }
@@ -494,7 +556,7 @@ p{ color: var(--ink-dim); }
 .card-main img{ border-radius:10px; width:100%; height:60%; object-fit:cover; margin-bottom:1rem; }
 .card-main .tag{
   display:inline-block; font-size:0.7rem; padding:0.3rem 0.7rem; border-radius:20px;
-  background: var(--dark-green); color: var(--lime); font-weight:600; margin-bottom:0.6rem;
+  background: var(--dark-green); color: var(--lime); font-weight:700; margin-bottom:0.6rem;
 }
 .card-main h4{ font-size:1.02rem; color:var(--white); margin-bottom:0.3rem; font-family: var(--font-display); }
 .card-main p{ font-size:0.8rem; margin:0; }
@@ -519,7 +581,7 @@ p{ color: var(--ink-dim); }
 }
 .card-chat .row{ display:flex; align-items:center; gap:0.6rem; margin-bottom:0.7rem; }
 .card-chat img{ width:28px; height:28px; border-radius:50%; }
-.card-chat .row span{ font-size:0.78rem; color: var(--ink); font-weight:600; }
+.card-chat .row span{ font-size:0.78rem; color: var(--ink); font-weight:700; }
 .card-chat .bubble{
   font-size:0.75rem; background: var(--bg-elevated); padding:0.5rem 0.7rem; border-radius:10px;
   color: var(--ink-dim); border:1px solid var(--border-soft);
@@ -529,7 +591,7 @@ p{ color: var(--ink-dim); }
   width:40%; bottom:0%; left:8%; z-index:2;
   --rot:5deg; animation-delay:1.6s;
   padding:0.9rem; background: #121210;
-  font-family: 'Space Grotesk', monospace; font-size:0.68rem; line-height:1.7;
+  font-family: 'Courier New', monospace; font-size:0.68rem; line-height:1.7;
 }
 .card-code .l1{ color:var(--olive); }
 .card-code .l2{ color:var(--lime); }
@@ -564,7 +626,7 @@ p{ color: var(--ink-dim); }
   width: max-content;
 }
 .trust-track span{
-  font-family: var(--font-display); font-size: 1.25rem; font-weight:600;
+  font-family: var(--font-display); font-size: 1.25rem; font-weight:400;
   color: var(--ink-faint); opacity:0.75; white-space:nowrap;
   display:flex; align-items:center; gap:0.5rem;
   transition: opacity .25s var(--ease), color .25s var(--ease);
@@ -628,7 +690,7 @@ p{ color: var(--ink-dim); }
 .filter-btn{
   padding: 0.6rem 1.2rem; border-radius: var(--radius-full);
   background: var(--bg-elevated); border:1px solid var(--border-soft);
-  font-size:0.85rem; color: var(--ink-dim); font-weight:500;
+  font-size:0.85rem; color: var(--ink-dim); font-weight:700;
   transition: all .3s var(--ease); white-space:nowrap;
 }
 .filter-btn:hover{ color: var(--white); border-color: var(--lime); }
@@ -688,7 +750,7 @@ p{ color: var(--ink-dim); }
 }
 .project-result{
   display:flex; align-items:center; gap:0.5rem; font-size:0.82rem;
-  color: var(--lime); font-weight:600;
+  color: var(--lime); font-weight:700;
 }
 .project-result i{ font-size:0.75rem; }
 .project-view-btn{
@@ -766,7 +828,7 @@ p{ color: var(--ink-dim); }
   background: var(--bg-elevated);
   border:1px solid var(--border-lime);
   display:flex; align-items:center; justify-content:center;
-  font-family: var(--font-display); font-weight:600; color: var(--lime);
+  font-family: var(--font-display); font-weight:400; color: var(--lime);
   position:relative; z-index:2; transition: all .3s var(--ease);
 }
 .process-step:hover .process-dot{
@@ -895,7 +957,7 @@ p{ color: var(--ink-dim); }
   display:flex; align-items:center; justify-content:space-between; gap:1rem;
   padding: 1.35rem 1.6rem; cursor:pointer; user-select:none;
 }
-.faq-q h4{ font-size:1rem; font-family: var(--font-body); font-weight:600; color:var(--white); }
+.faq-q h4{ font-size:1rem; font-family: var(--font-body); font-weight:700; color:var(--white); }
 .faq-q i{ color: var(--lime); transition: transform .35s var(--ease); flex-shrink:0; }
 .faq-item.open .faq-q i{ transform: rotate(45deg); }
 .faq-a{ max-height:0; overflow:hidden; transition: max-height .5s var(--ease); }
@@ -919,7 +981,7 @@ p{ color: var(--ink-dim); }
 .contact-social{ display:flex; gap:0.8rem; margin-top:2rem; }
 .contact-social a{
   width:42px; height:42px; border-radius:12px; background: var(--bg-elevated); border:1px solid var(--border-soft);
-  display:flex; align-items:center; justify-content:center; color: var(--ink-dim);
+  display:flex; align-items:center; justify-content:center; color: var(--ink-dim); font-size:1.05rem;
   transition: all .3s var(--ease);
 }
 .contact-social a:hover{ background: var(--lime); color:#14150C; border-color: var(--lime); transform: translateY(-3px) scale(1.06); }
@@ -932,7 +994,7 @@ p{ color: var(--ink-dim); }
 }
 .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
 .form-group{ margin-bottom:1.2rem; position:relative; }
-.form-group label{ display:block; font-size:0.82rem; color: var(--ink-dim); margin-bottom:0.5rem; font-weight:500; }
+.form-group label{ display:block; font-size:0.82rem; color: var(--ink-dim); margin-bottom:0.5rem; font-weight:700; }
 .form-group input, .form-group textarea{
   width:100%; padding:0.85rem 1rem; border-radius:10px;
   background: var(--bg-elevated-2); border:1px solid var(--border-soft);
@@ -1022,7 +1084,7 @@ p{ color: var(--ink-dim); }
 .footer-brand{ position:relative; }
 .footer-brand-logo{ display:flex; align-items:center; gap:0.7rem; margin-bottom:1.2rem; }
 .footer-brand-logo img{ height:36px; width:36px; border-radius:10px; }
-.footer-brand-logo span{ font-family: var(--font-display); font-weight:600; font-size:1.05rem; color: var(--white); }
+.footer-brand-logo span{ font-family: var(--font-display); font-weight:400; font-size:1.05rem; color: var(--white); }
 .footer-brand p{ font-size:0.9rem; max-width:280px; margin-bottom:1.4rem; }
 .footer-brand .contact-social{ margin-top:0.5rem; }
 .footer-banner{
@@ -1081,7 +1143,7 @@ p{ color: var(--ink-dim); }
   border-bottom: 1px solid var(--border-soft);
 }
 .ccm-brand img{ width:22px; height:22px; border-radius:6px; }
-.ccm-brand span{ font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:0.84rem; color:var(--white); letter-spacing:0.01em; }
+.ccm-brand span{ font-family:var(--font-display); font-weight:400; font-size:0.9rem; color:var(--white); letter-spacing:0.02em; }
 .ccm-list{ list-style:none; margin:0; padding:0; }
 .ccm-item{
   display:flex; align-items:center; gap:0.75rem;
@@ -1101,7 +1163,7 @@ p{ color: var(--ink-dim); }
 .ccm-divider{ height:1px; background: var(--border-soft); margin: 0.35rem 0.4rem; }
 .ccm-toast{
   position: fixed; z-index: 950; left:50%; bottom: 2rem; transform: translateX(-50%) translateY(16px);
-  background: var(--lime); color:#14150C; font-size:0.85rem; font-weight:600;
+  background: var(--lime); color:#14150C; font-size:0.85rem; font-weight:700;
   padding: 0.75rem 1.3rem; border-radius: 999px;
   opacity:0; transition: opacity .25s var(--ease), transform .25s var(--ease);
   pointer-events:none; display:flex; align-items:center; gap:0.5rem;
@@ -1111,10 +1173,50 @@ p{ color: var(--ink-dim); }
   .custom-context-menu{ min-width: 200px; max-width: 86vw; }
 }
 
+/* ============================================
+   SKETCHY / WHITEBOARD-STYLE ICONS
+   Font Awesome's paid "Whiteboard" pack isn't available on the
+   free CDN kit this site uses, so every icon glyph gets a wobble
+   filter instead: a rough, hand-inked distortion plus a slight
+   per-icon tilt, so icons read as marker-drawn rather than
+   vector-perfect. Pure CSS/SVG, no extra icon library needed.
+   ============================================ */
+.icon-sketch-defs{ position:absolute; width:0; height:0; overflow:hidden; }
+
+i[class*="fa-"]{
+  filter: url(#sketchWobble);
+}
+
+@media (prefers-reduced-motion: reduce){
+  i[class*="fa-"]{ filter: url(#sketchWobbleStatic); }
+}
+
+/* Slight, varied tilt on icon *containers* only (never on the <i> itself,
+   which would fight fa-shake/fa-bounce/fa-beat/fa-spin's own transforms). */
+.service-icon{ transform: rotate(-3deg); }
+.service-card:nth-child(even) .service-icon{ transform: rotate(2deg); }
+.card-stat .icon{ transform: rotate(4deg); }
+.hero-badge{ transform: rotate(-1deg); }
+.trust-track span:nth-child(odd){ transform: rotate(-2deg); }
+.trust-track span:nth-child(even){ transform: rotate(2deg); }
+
 </style>
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to content</a>
+
+<!-- Hand-drawn "whiteboard marker" distortion filters for all Font Awesome icons -->
+<svg class="icon-sketch-defs" aria-hidden="true" focusable="false">
+  <filter id="sketchWobble" x="-30%" y="-30%" width="160%" height="160%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.045 0.09" numOctaves="2" seed="7" result="noise"></feTurbulence>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.6" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+  </filter>
+  <!-- lighter, non-animated variant for prefers-reduced-motion contexts -->
+  <filter id="sketchWobbleStatic" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.05 0.09" numOctaves="1" seed="3" result="noise"></feTurbulence>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+  </filter>
+</svg>
 
 <div id="loader" aria-hidden="true">
   <div class="loader-inner">
@@ -1140,12 +1242,13 @@ p{ color: var(--ink-dim); }
       <a href="#testimonials">Testimonials</a>
       <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
-      <a href="#contact" class="btn btn-primary mobile-cta">Start Project <i class="fa-solid fa-arrow-right ico-sway"></i></a>
+      <a href="#contact" class="btn btn-primary mobile-cta">Start Project <i class="fa-solid fa-arrow-right fa-shake" aria-hidden="true"></i></a>
     </nav>
     <div class="nav-cta">
-      <a href="#contact" class="btn btn-primary">Start Project <i class="fa-solid fa-arrow-right ico-sway"></i></a>
+      <a href="#contact" class="btn btn-primary">Start Project <i class="fa-solid fa-arrow-right fa-shake" aria-hidden="true"></i></a>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
-        <span></span><span></span><span></span>
+        <i class="fa-solid fa-bars nav-toggle-icon icon-open" aria-hidden="true"></i>
+        <i class="fa-solid fa-xmark nav-toggle-icon icon-close" aria-hidden="true"></i>
       </button>
     </div>
   </div>
@@ -1155,7 +1258,7 @@ p{ color: var(--ink-dim); }
 
 <!-- ============ HERO ============ -->
 <section class="hero" aria-label="Introduction">
-  <div class="brand-watermark" aria-hidden="true"><img src="https://i.ibb.co/WNtMTYc0/banner-final.png" alt=""></div>
+  <div class="brand-watermark" aria-hidden="true"><img src="https://i.ibb.co/bZ2KDvg/banner-final.png" alt=""></div>
   <div class="container hero-grid">
     <div class="hero-copy reveal in-view">
       <div class="hero-badge">
@@ -1166,8 +1269,8 @@ p{ color: var(--ink-dim); }
       <h1>We design <span class="accent">world-class</span> websites &amp; apps that move the needle.</h1>
       <p class="hero-sub">NoviQue is an independent design studio, founded in 2020, partnering with growing brands to craft thoughtful websites, mobile apps, and product experiences: engineered to convert, built to scale, designed to inspire.</p>
       <div class="hero-actions">
-        <a href="#contact" class="btn btn-primary">Start a Project <i class="fa-solid fa-arrow-right ico-sway"></i></a>
-        <a href="#portfolio" class="btn btn-outline">View Our Work <i class="fa-solid fa-arrow-up-right-from-square ico-bounce"></i></a>
+        <a href="#contact" class="btn btn-primary">Start a Project <i class="fa-solid fa-arrow-right fa-shake" aria-hidden="true"></i></a>
+        <a href="#portfolio" class="btn btn-outline">View Our Work <i class="fa-solid fa-arrow-up-right-from-square fa-bounce" aria-hidden="true"></i></a>
       </div>
       <div class="hero-stats">
         <div class="hero-stat"><b class="counter" data-target="32">0</b><span>Projects Delivered</span></div>
@@ -1177,6 +1280,18 @@ p{ color: var(--ink-dim); }
       </div>
     </div>
     <div class="hero-visual reveal-scale in-view">
+      <div class="hero-3d" aria-hidden="true">
+        <spline-viewer
+          id="heroSpline"
+          url="https://prod.spline.design/9951u9cumiw2Ehj8/scene.splinecode"
+          loading-anim-type="none">
+        </spline-viewer>
+        <div class="hero-3d-fallback" id="hero3dFallback" style="display:none;">
+          <div class="orb o1"></div>
+          <div class="orb o2"></div>
+          <div class="orb o3"></div>
+        </div>
+      </div>
       <div class="hero-card card-main">
         <span class="tag">Case Study</span>
         <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=600&auto=format&fit=crop" alt="Fintech mobile app dashboard mockup" loading="lazy">
@@ -1184,7 +1299,7 @@ p{ color: var(--ink-dim); }
         <p>Mobile banking redesign, plus 64% engagement</p>
       </div>
       <div class="hero-card card-stat">
-        <div class="icon"><i class="fa-solid fa-arrow-trend-up ico-bounce"></i></div>
+        <div class="icon"><i class="fa-solid fa-arrow-trend-up fa-bounce" aria-hidden="true"></i></div>
         <b>+184%</b>
         <span>Avg. conversion lift</span>
       </div>
@@ -1210,22 +1325,22 @@ p{ color: var(--ink-dim); }
 <section class="trust-strip" aria-label="Trusted by">
   <p class="trust-label">Proud to have worked with</p>
   <div class="trust-track" aria-hidden="true">
-    <span><i class="fa-solid fa-cube ico-spin-slow"></i> Meridian Labs</span>
-    <span><i class="fa-solid fa-bolt ico-pulse"></i> Voltiq</span>
-    <span><i class="fa-solid fa-seedling ico-sway"></i> Northfield</span>
-    <span><i class="fa-solid fa-mug-hot ico-float"></i> Brew&amp;Co</span>
-    <span><i class="fa-solid fa-plane ico-float"></i> Aeroloop</span>
-    <span><i class="fa-solid fa-vault ico-sway"></i> Sterling Bank</span>
-    <span><i class="fa-solid fa-atom ico-spin-slow"></i> Quanta Health</span>
-    <span><i class="fa-solid fa-gem ico-pulse"></i> Lumen Retail</span>
-    <span><i class="fa-solid fa-cube ico-spin-slow"></i> Meridian Labs</span>
-    <span><i class="fa-solid fa-bolt ico-pulse"></i> Voltiq</span>
-    <span><i class="fa-solid fa-seedling ico-sway"></i> Northfield</span>
-    <span><i class="fa-solid fa-mug-hot ico-float"></i> Brew&amp;Co</span>
-    <span><i class="fa-solid fa-plane ico-float"></i> Aeroloop</span>
-    <span><i class="fa-solid fa-vault ico-sway"></i> Sterling Bank</span>
-    <span><i class="fa-solid fa-atom ico-spin-slow"></i> Quanta Health</span>
-    <span><i class="fa-solid fa-gem ico-pulse"></i> Lumen Retail</span>
+    <span><i class="fa-solid fa-cube fa-spin" aria-hidden="true"></i> Meridian Labs</span>
+    <span><i class="fa-solid fa-bolt fa-beat" aria-hidden="true"></i> Voltiq</span>
+    <span><i class="fa-solid fa-seedling fa-shake" aria-hidden="true"></i> Northfield</span>
+    <span><i class="fa-solid fa-mug-hot fa-fade" aria-hidden="true"></i> Brew&amp;Co</span>
+    <span><i class="fa-solid fa-plane fa-fade" aria-hidden="true"></i> Aeroloop</span>
+    <span><i class="fa-solid fa-vault fa-shake" aria-hidden="true"></i> Sterling Bank</span>
+    <span><i class="fa-solid fa-atom fa-spin" aria-hidden="true"></i> Quanta Health</span>
+    <span><i class="fa-solid fa-gem fa-beat" aria-hidden="true"></i> Lumen Retail</span>
+    <span><i class="fa-solid fa-cube fa-spin" aria-hidden="true"></i> Meridian Labs</span>
+    <span><i class="fa-solid fa-bolt fa-beat" aria-hidden="true"></i> Voltiq</span>
+    <span><i class="fa-solid fa-seedling fa-shake" aria-hidden="true"></i> Northfield</span>
+    <span><i class="fa-solid fa-mug-hot fa-fade" aria-hidden="true"></i> Brew&amp;Co</span>
+    <span><i class="fa-solid fa-plane fa-fade" aria-hidden="true"></i> Aeroloop</span>
+    <span><i class="fa-solid fa-vault fa-shake" aria-hidden="true"></i> Sterling Bank</span>
+    <span><i class="fa-solid fa-atom fa-spin" aria-hidden="true"></i> Quanta Health</span>
+    <span><i class="fa-solid fa-gem fa-beat" aria-hidden="true"></i> Lumen Retail</span>
   </div>
 </section>
 
@@ -1240,63 +1355,63 @@ p{ color: var(--ink-dim); }
     <div class="services-grid stagger">
       <div class="service-card reveal" style="--i:0">
         <span class="service-num">01</span>
-        <div class="service-icon"><i class="fa-solid fa-pen-ruler ico-sway"></i></div>
+        <div class="service-icon"><i class="fa-solid fa-pen-ruler fa-shake" aria-hidden="true"></i></div>
         <h3>Website Design</h3>
         <p>Bespoke, conversion-focused websites that reflect your brand's ambition, from marketing sites to complex web platforms.</p>
         <div class="service-tags"><span>Figma</span><span>Design Systems</span><span>Responsive</span></div>
       </div>
       <div class="service-card reveal" style="--i:1">
         <span class="service-num">02</span>
-        <div class="service-icon"><i class="fa-solid fa-code ico-pulse"></i></div>
+        <div class="service-icon"><i class="fa-solid fa-code fa-beat" aria-hidden="true"></i></div>
         <h3>Web Development</h3>
         <p>Fast, scalable front and back-end builds using modern frameworks, headless CMS, and rock-solid architecture.</p>
         <div class="service-tags"><span>React</span><span>Next.js</span><span>Headless CMS</span></div>
       </div>
       <div class="service-card reveal" style="--i:2">
         <span class="service-num">03</span>
-        <div class="service-icon"><i class="fa-solid fa-mobile-screen-button ico-bounce"></i></div>
+        <div class="service-icon"><i class="fa-solid fa-mobile-screen-button fa-bounce" aria-hidden="true"></i></div>
         <h3>Mobile App Design</h3>
         <p>Native and cross-platform app experiences engineered for delight, retention, and App Store-ready polish.</p>
         <div class="service-tags"><span>iOS</span><span>Android</span><span>Prototyping</span></div>
       </div>
       <div class="service-card reveal" style="--i:3">
         <span class="service-num">04</span>
-        <div class="service-icon"><i class="fa-solid fa-layer-group ico-float"></i></div>
+        <div class="service-icon"><i class="fa-solid fa-layer-group fa-fade" aria-hidden="true"></i></div>
         <h3>UI/UX Design</h3>
         <p>Research-driven interface design that balances aesthetics with usability, validated through real user testing.</p>
         <div class="service-tags"><span>User Research</span><span>Wireframes</span><span>Motion</span></div>
       </div>
       <div class="service-card reveal" style="--i:4">
         <span class="service-num">05</span>
-        <div class="service-icon"><i class="fa-solid fa-palette ico-sway"></i></div>
+        <div class="service-icon"><i class="fa-solid fa-palette fa-shake" aria-hidden="true"></i></div>
         <h3>Branding</h3>
         <p>Identity systems: logo, typography, voice, and visual language, built to travel across every touchpoint.</p>
         <div class="service-tags"><span>Identity</span><span>Strategy</span><span>Guidelines</span></div>
       </div>
       <div class="service-card reveal" style="--i:5">
         <span class="service-num">06</span>
-        <div class="service-icon"><i class="fa-solid fa-brain ico-pulse"></i></div>
+        <div class="service-icon"><i class="fa-solid fa-brain fa-beat" aria-hidden="true"></i></div>
         <h3>AI Solutions</h3>
         <p>Custom AI integrations, intelligent automations, and LLM-powered features embedded directly into your product.</p>
         <div class="service-tags"><span>LLM Integration</span><span>Automation</span><span>Copilots</span></div>
       </div>
       <div class="service-card reveal" style="--i:6">
         <span class="service-num">07</span>
-        <div class="service-icon"><i class="fa-solid fa-bullhorn ico-bounce"></i></div>
+        <div class="service-icon"><i class="fa-solid fa-bullhorn fa-bounce" aria-hidden="true"></i></div>
         <h3>Digital Marketing</h3>
         <p>Performance campaigns across paid, social, and email, engineered around funnels that actually convert.</p>
         <div class="service-tags"><span>Paid Media</span><span>Email</span><span>Analytics</span></div>
       </div>
       <div class="service-card reveal" style="--i:7">
         <span class="service-num">08</span>
-        <div class="service-icon"><i class="fa-solid fa-magnifying-glass-chart ico-float"></i></div>
+        <div class="service-icon"><i class="fa-solid fa-magnifying-glass-chart fa-fade" aria-hidden="true"></i></div>
         <h3>SEO</h3>
         <p>Technical and content SEO that compounds, built for organic growth that outlasts any single campaign.</p>
         <div class="service-tags"><span>Technical SEO</span><span>Content</span><span>Link Building</span></div>
       </div>
       <div class="service-card reveal" style="--i:8">
         <span class="service-num">09</span>
-        <div class="service-icon"><i class="fa-solid fa-cubes ico-spin-slow"></i></div>
+        <div class="service-icon"><i class="fa-solid fa-cubes fa-spin" aria-hidden="true"></i></div>
         <h3>Custom Software</h3>
         <p>Internal tools, SaaS platforms, and complex web applications engineered for scale and long-term maintainability.</p>
         <div class="service-tags"><span>SaaS</span><span>APIs</span><span>Cloud</span></div>
@@ -1328,15 +1443,15 @@ p{ color: var(--ink-dim); }
           <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=700&auto=format&fit=crop" alt="Orbital Finance mobile banking app interface" loading="lazy">
           <span class="project-cat">Mobile App</span>
           <div class="project-stats-mini">
-            <span><i class="fa-regular fa-eye ico-pulse"></i> 2.1k</span>
-            <span><i class="fa-regular fa-heart ico-bounce"></i> 146</span>
+            <span><i class="fa-regular fa-eye fa-beat" aria-hidden="true"></i> 2.1k</span>
+            <span><i class="fa-regular fa-heart fa-bounce" aria-hidden="true"></i> 146</span>
           </div>
-          <button class="project-view-btn" aria-label="View Orbital Finance case study"><i class="fa-solid fa-arrow-up-right"></i></button>
+          <button class="project-view-btn" aria-label="View Orbital Finance case study"><i class="fa-solid fa-arrow-up-right" aria-hidden="true"></i></button>
           <div class="project-info">
             <h3>Orbital Finance</h3>
             <p>Mobile banking app redesign for a fintech scale-up.</p>
             <div class="project-tags"><span>Figma</span><span>Swift UI</span><span>Fintech</span></div>
-            <div class="project-result"><i class="fa-solid fa-arrow-trend-up ico-bounce"></i> +64% user engagement</div>
+            <div class="project-result"><i class="fa-solid fa-arrow-trend-up fa-bounce" aria-hidden="true"></i> +64% user engagement</div>
           </div>
         </div>
       </article>
@@ -1346,15 +1461,15 @@ p{ color: var(--ink-dim); }
           <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=700&auto=format&fit=crop" alt="Northfield e-commerce website design" loading="lazy">
           <span class="project-cat">Web Design</span>
           <div class="project-stats-mini">
-            <span><i class="fa-regular fa-eye ico-pulse"></i> 1.6k</span>
-            <span><i class="fa-regular fa-heart ico-bounce"></i> 98</span>
+            <span><i class="fa-regular fa-eye fa-beat" aria-hidden="true"></i> 1.6k</span>
+            <span><i class="fa-regular fa-heart fa-bounce" aria-hidden="true"></i> 98</span>
           </div>
-          <button class="project-view-btn" aria-label="View Northfield case study"><i class="fa-solid fa-arrow-up-right"></i></button>
+          <button class="project-view-btn" aria-label="View Northfield case study"><i class="fa-solid fa-arrow-up-right" aria-hidden="true"></i></button>
           <div class="project-info">
             <h3>Northfield Goods</h3>
             <p>Headless commerce experience for a premium homeware brand.</p>
             <div class="project-tags"><span>Next.js</span><span>Shopify</span><span>E-commerce</span></div>
-            <div class="project-result"><i class="fa-solid fa-arrow-trend-up ico-bounce"></i> +112% conversion rate</div>
+            <div class="project-result"><i class="fa-solid fa-arrow-trend-up fa-bounce" aria-hidden="true"></i> +112% conversion rate</div>
           </div>
         </div>
       </article>
@@ -1364,15 +1479,15 @@ p{ color: var(--ink-dim); }
           <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=700&auto=format&fit=crop" alt="Quanta Health brand identity design" loading="lazy">
           <span class="project-cat">Branding</span>
           <div class="project-stats-mini">
-            <span><i class="fa-regular fa-eye ico-pulse"></i> 1.2k</span>
-            <span><i class="fa-regular fa-heart ico-bounce"></i> 87</span>
+            <span><i class="fa-regular fa-eye fa-beat" aria-hidden="true"></i> 1.2k</span>
+            <span><i class="fa-regular fa-heart fa-bounce" aria-hidden="true"></i> 87</span>
           </div>
-          <button class="project-view-btn" aria-label="View Quanta Health case study"><i class="fa-solid fa-arrow-up-right"></i></button>
+          <button class="project-view-btn" aria-label="View Quanta Health case study"><i class="fa-solid fa-arrow-up-right" aria-hidden="true"></i></button>
           <div class="project-info">
             <h3>Quanta Health</h3>
             <p>Full identity system for a digital health platform.</p>
             <div class="project-tags"><span>Identity</span><span>Guidelines</span><span>Healthcare</span></div>
-            <div class="project-result"><i class="fa-solid fa-arrow-trend-up ico-bounce"></i> Rebrand across 14 touchpoints</div>
+            <div class="project-result"><i class="fa-solid fa-arrow-trend-up fa-bounce" aria-hidden="true"></i> Rebrand across 14 touchpoints</div>
           </div>
         </div>
       </article>
@@ -1382,15 +1497,15 @@ p{ color: var(--ink-dim); }
           <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=700&auto=format&fit=crop" alt="Voltiq SaaS dashboard UI/UX design" loading="lazy">
           <span class="project-cat">UI/UX</span>
           <div class="project-stats-mini">
-            <span><i class="fa-regular fa-eye ico-pulse"></i> 1.8k</span>
-            <span><i class="fa-regular fa-heart ico-bounce"></i> 112</span>
+            <span><i class="fa-regular fa-eye fa-beat" aria-hidden="true"></i> 1.8k</span>
+            <span><i class="fa-regular fa-heart fa-bounce" aria-hidden="true"></i> 112</span>
           </div>
-          <button class="project-view-btn" aria-label="View Voltiq case study"><i class="fa-solid fa-arrow-up-right"></i></button>
+          <button class="project-view-btn" aria-label="View Voltiq case study"><i class="fa-solid fa-arrow-up-right" aria-hidden="true"></i></button>
           <div class="project-info">
             <h3>Voltiq Dashboard</h3>
             <p>Data-dense SaaS dashboard redesigned for clarity.</p>
             <div class="project-tags"><span>User Research</span><span>Design System</span><span>SaaS</span></div>
-            <div class="project-result"><i class="fa-solid fa-arrow-trend-up ico-bounce"></i> -38% support tickets</div>
+            <div class="project-result"><i class="fa-solid fa-arrow-trend-up fa-bounce" aria-hidden="true"></i> -38% support tickets</div>
           </div>
         </div>
       </article>
@@ -1400,15 +1515,15 @@ p{ color: var(--ink-dim); }
           <img src="https://images.unsplash.com/photo-1512428813834-c702c7702b78?q=80&w=700&auto=format&fit=crop" alt="Aeroloop travel booking app design" loading="lazy">
           <span class="project-cat">Mobile App</span>
           <div class="project-stats-mini">
-            <span><i class="fa-regular fa-eye ico-pulse"></i> 1.4k</span>
-            <span><i class="fa-regular fa-heart ico-bounce"></i> 93</span>
+            <span><i class="fa-regular fa-eye fa-beat" aria-hidden="true"></i> 1.4k</span>
+            <span><i class="fa-regular fa-heart fa-bounce" aria-hidden="true"></i> 93</span>
           </div>
-          <button class="project-view-btn" aria-label="View Aeroloop case study"><i class="fa-solid fa-arrow-up-right"></i></button>
+          <button class="project-view-btn" aria-label="View Aeroloop case study"><i class="fa-solid fa-arrow-up-right" aria-hidden="true"></i></button>
           <div class="project-info">
             <h3>Aeroloop Travel</h3>
             <p>Cross-platform booking app for a travel-tech startup.</p>
             <div class="project-tags"><span>React Native</span><span>Prototyping</span><span>Travel</span></div>
-            <div class="project-result"><i class="fa-solid fa-arrow-trend-up ico-bounce"></i> 4.8 star App Store rating</div>
+            <div class="project-result"><i class="fa-solid fa-arrow-trend-up fa-bounce" aria-hidden="true"></i> 4.8 star App Store rating</div>
           </div>
         </div>
       </article>
@@ -1418,22 +1533,22 @@ p{ color: var(--ink-dim); }
           <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=700&auto=format&fit=crop" alt="Lumen Retail marketing website design" loading="lazy">
           <span class="project-cat">Web Design</span>
           <div class="project-stats-mini">
-            <span><i class="fa-regular fa-eye ico-pulse"></i> 980</span>
-            <span><i class="fa-regular fa-heart ico-bounce"></i> 61</span>
+            <span><i class="fa-regular fa-eye fa-beat" aria-hidden="true"></i> 980</span>
+            <span><i class="fa-regular fa-heart fa-bounce" aria-hidden="true"></i> 61</span>
           </div>
-          <button class="project-view-btn" aria-label="View Lumen Retail case study"><i class="fa-solid fa-arrow-up-right"></i></button>
+          <button class="project-view-btn" aria-label="View Lumen Retail case study"><i class="fa-solid fa-arrow-up-right" aria-hidden="true"></i></button>
           <div class="project-info">
             <h3>Lumen Retail</h3>
             <p>Marketing site and CMS overhaul for a retail group.</p>
             <div class="project-tags"><span>Webflow</span><span>Animation</span><span>Retail</span></div>
-            <div class="project-result"><i class="fa-solid fa-arrow-trend-up ico-bounce"></i> +76% organic traffic</div>
+            <div class="project-result"><i class="fa-solid fa-arrow-trend-up fa-bounce" aria-hidden="true"></i> +76% organic traffic</div>
           </div>
         </div>
       </article>
     </div>
 
     <div class="portfolio-more reveal">
-      <a href="#contact" class="btn btn-outline">See Full Portfolio <i class="fa-solid fa-arrow-right ico-sway"></i></a>
+      <a href="#contact" class="btn btn-outline">See Full Portfolio <i class="fa-solid fa-arrow-right fa-shake" aria-hidden="true"></i></a>
     </div>
   </div>
 </section>
@@ -1457,7 +1572,7 @@ p{ color: var(--ink-dim); }
               <span>Fintech, Mobile App Design &amp; Development</span>
             </div>
           </div>
-          <span class="case-toggle"><i class="fa-solid fa-plus"></i></span>
+          <span class="case-toggle"><i class="fa-solid fa-plus" aria-hidden="true"></i></span>
         </div>
         <div class="case-body">
           <div class="case-body-inner">
@@ -1485,7 +1600,7 @@ p{ color: var(--ink-dim); }
               <span>Retail, Web Development &amp; SEO</span>
             </div>
           </div>
-          <span class="case-toggle"><i class="fa-solid fa-plus"></i></span>
+          <span class="case-toggle"><i class="fa-solid fa-plus" aria-hidden="true"></i></span>
         </div>
         <div class="case-body">
           <div class="case-body-inner">
@@ -1513,7 +1628,7 @@ p{ color: var(--ink-dim); }
               <span>SaaS, UI/UX Design &amp; Design Systems</span>
             </div>
           </div>
-          <span class="case-toggle"><i class="fa-solid fa-plus"></i></span>
+          <span class="case-toggle"><i class="fa-solid fa-plus" aria-hidden="true"></i></span>
         </div>
         <div class="case-body">
           <div class="case-body-inner">
@@ -1597,12 +1712,12 @@ p{ color: var(--ink-dim); }
         <div class="price-amount"><b>$2,900</b><span>/ project</span></div>
         <p class="price-desc">For early-stage brands needing a polished, professional launchpad.</p>
         <ul class="price-features">
-          <li><i class="fa-solid fa-circle-check"></i> Up to 5 custom pages</li>
-          <li><i class="fa-solid fa-circle-check"></i> Responsive web design</li>
-          <li><i class="fa-solid fa-circle-check"></i> Basic SEO setup</li>
-          <li><i class="fa-solid fa-circle-check"></i> Content management system</li>
-          <li><i class="fa-solid fa-circle-check"></i> 2 weeks turnaround</li>
-          <li><i class="fa-solid fa-circle-check"></i> 30 days of support</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Up to 5 custom pages</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Responsive web design</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Basic SEO setup</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Content management system</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> 2 weeks turnaround</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> 30 days of support</li>
         </ul>
         <a href="#contact" class="btn btn-outline btn-block">Get Started</a>
       </div>
@@ -1612,13 +1727,13 @@ p{ color: var(--ink-dim); }
         <div class="price-amount"><b>$7,500</b><span>/ project</span></div>
         <p class="price-desc">For growing companies that need a full brand &amp; product experience.</p>
         <ul class="price-features">
-          <li><i class="fa-solid fa-circle-check"></i> Up to 15 custom pages</li>
-          <li><i class="fa-solid fa-circle-check"></i> UI/UX design system</li>
-          <li><i class="fa-solid fa-circle-check"></i> Advanced SEO &amp; analytics</li>
-          <li><i class="fa-solid fa-circle-check"></i> CMS + headless architecture</li>
-          <li><i class="fa-solid fa-circle-check"></i> Basic branding refresh</li>
-          <li><i class="fa-solid fa-circle-check"></i> 6 weeks turnaround</li>
-          <li><i class="fa-solid fa-circle-check"></i> 90 days of support</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Up to 15 custom pages</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> UI/UX design system</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Advanced SEO &amp; analytics</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> CMS + headless architecture</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Basic branding refresh</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> 6 weeks turnaround</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> 90 days of support</li>
         </ul>
         <a href="#contact" class="btn btn-primary btn-block">Get Started</a>
       </div>
@@ -1627,13 +1742,13 @@ p{ color: var(--ink-dim); }
         <div class="price-amount"><b>Custom</b><span>quote</span></div>
         <p class="price-desc">For established brands and platforms needing full-scale digital transformation.</p>
         <ul class="price-features">
-          <li><i class="fa-solid fa-circle-check"></i> Unlimited pages &amp; flows</li>
-          <li><i class="fa-solid fa-circle-check"></i> Full brand identity system</li>
-          <li><i class="fa-solid fa-circle-check"></i> Native or cross-platform app</li>
-          <li><i class="fa-solid fa-circle-check"></i> Custom software &amp; AI features</li>
-          <li><i class="fa-solid fa-circle-check"></i> Dedicated project team</li>
-          <li><i class="fa-solid fa-circle-check"></i> Priority support &amp; SLAs</li>
-          <li><i class="fa-solid fa-circle-check"></i> Ongoing growth partnership</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Unlimited pages &amp; flows</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Full brand identity system</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Native or cross-platform app</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Custom software &amp; AI features</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Dedicated project team</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Priority support &amp; SLAs</li>
+          <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Ongoing growth partnership</li>
         </ul>
         <a href="#contact" class="btn btn-outline btn-block">Request a Quote</a>
       </div>
@@ -1653,7 +1768,7 @@ p{ color: var(--ink-dim); }
         <div class="testi-slide">
           <div class="testi-card">
             <div class="testi-stars" aria-label="5 out of 5 stars">
-              <i class="fa-solid fa-star ico-pulse"></i><i class="fa-solid fa-star ico-pulse"></i><i class="fa-solid fa-star ico-pulse"></i><i class="fa-solid fa-star ico-pulse"></i><i class="fa-solid fa-star ico-pulse"></i>
+              <i class="fa-solid fa-star fa-beat" aria-hidden="true"></i><i class="fa-solid fa-star fa-beat" aria-hidden="true"></i><i class="fa-solid fa-star fa-beat" aria-hidden="true"></i><i class="fa-solid fa-star fa-beat" aria-hidden="true"></i><i class="fa-solid fa-star fa-beat" aria-hidden="true"></i>
             </div>
             <p class="testi-quote">NoviQue didn't just redesign our app, they rebuilt how our users think about our product. Engagement metrics we'd been chasing for two years moved within a single quarter.</p>
             <div class="testi-person">
@@ -1665,7 +1780,7 @@ p{ color: var(--ink-dim); }
         <div class="testi-slide">
           <div class="testi-card">
             <div class="testi-stars" aria-label="5 out of 5 stars">
-              <i class="fa-solid fa-star ico-pulse"></i><i class="fa-solid fa-star ico-pulse"></i><i class="fa-solid fa-star ico-pulse"></i><i class="fa-solid fa-star ico-pulse"></i><i class="fa-solid fa-star ico-pulse"></i>
+              <i class="fa-solid fa-star fa-beat" aria-hidden="true"></i><i class="fa-solid fa-star fa-beat" aria-hidden="true"></i><i class="fa-solid fa-star fa-beat" aria-hidden="true"></i><i class="fa-solid fa-star fa-beat" aria-hidden="true"></i><i class="fa-solid fa-star fa-beat" aria-hidden="true"></i>
             </div>
             <p class="testi-quote">The team's process is exceptional: thorough discovery, sharp strategy, and design work that felt custom-built for our brand from the very first concept.</p>
             <div class="testi-person">
@@ -1677,7 +1792,7 @@ p{ color: var(--ink-dim); }
         <div class="testi-slide">
           <div class="testi-card">
             <div class="testi-stars" aria-label="5 out of 5 stars">
-              <i class="fa-solid fa-star ico-pulse"></i><i class="fa-solid fa-star ico-pulse"></i><i class="fa-solid fa-star ico-pulse"></i><i class="fa-solid fa-star ico-pulse"></i><i class="fa-solid fa-star ico-pulse"></i>
+              <i class="fa-solid fa-star fa-beat" aria-hidden="true"></i><i class="fa-solid fa-star fa-beat" aria-hidden="true"></i><i class="fa-solid fa-star fa-beat" aria-hidden="true"></i><i class="fa-solid fa-star fa-beat" aria-hidden="true"></i><i class="fa-solid fa-star fa-beat" aria-hidden="true"></i>
             </div>
             <p class="testi-quote">We've worked with three other agencies before NoviQue. None came close to this level of craft, communication, and genuine investment in our results.</p>
             <div class="testi-person">
@@ -1689,7 +1804,7 @@ p{ color: var(--ink-dim); }
         <div class="testi-slide">
           <div class="testi-card">
             <div class="testi-stars" aria-label="5 out of 5 stars">
-              <i class="fa-solid fa-star ico-pulse"></i><i class="fa-solid fa-star ico-pulse"></i><i class="fa-solid fa-star ico-pulse"></i><i class="fa-solid fa-star ico-pulse"></i><i class="fa-solid fa-star ico-pulse"></i>
+              <i class="fa-solid fa-star fa-beat" aria-hidden="true"></i><i class="fa-solid fa-star fa-beat" aria-hidden="true"></i><i class="fa-solid fa-star fa-beat" aria-hidden="true"></i><i class="fa-solid fa-star fa-beat" aria-hidden="true"></i><i class="fa-solid fa-star fa-beat" aria-hidden="true"></i>
             </div>
             <p class="testi-quote">Our new site paid for itself within six weeks of launch. NoviQue understands that great design has to perform, not just look good.</p>
             <div class="testi-person">
@@ -1701,9 +1816,9 @@ p{ color: var(--ink-dim); }
       </div>
     </div>
     <div class="testi-controls">
-      <button class="testi-arrow" id="testiPrev" aria-label="Previous testimonial"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="testi-arrow" id="testiPrev" aria-label="Previous testimonial"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
       <div class="testi-dots" id="testiDots"></div>
-      <button class="testi-arrow" id="testiNext" aria-label="Next testimonial"><i class="fa-solid fa-chevron-right"></i></button>
+      <button class="testi-arrow" id="testiNext" aria-label="Next testimonial"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
     </div>
   </div>
 </section>
@@ -1729,19 +1844,19 @@ p{ color: var(--ink-dim); }
         <p>We're a small, hands-on team of designers, engineers, and strategists working directly with founders and growing teams to ship websites and apps that actually move business metrics, not just fill a portfolio. No account managers, no hand-offs: you work with the people actually building your project.</p>
         <div class="about-values">
           <div class="about-value">
-            <i class="fa-solid fa-bullseye ico-pulse"></i>
+            <i class="fa-solid fa-bullseye fa-beat" aria-hidden="true"></i>
             <div><b>Outcome-obsessed</b><p>Every pixel is tied to a measurable goal.</p></div>
           </div>
           <div class="about-value">
-            <i class="fa-solid fa-handshake ico-sway"></i>
+            <i class="fa-solid fa-handshake fa-shake" aria-hidden="true"></i>
             <div><b>True partnership</b><p>We embed with your team, not just your inbox.</p></div>
           </div>
           <div class="about-value">
-            <i class="fa-solid fa-gem ico-float"></i>
+            <i class="fa-solid fa-gem fa-fade" aria-hidden="true"></i>
             <div><b>Craft over trends</b><p>Timeless design decisions, not fads.</p></div>
           </div>
           <div class="about-value">
-            <i class="fa-solid fa-bolt ico-bounce"></i>
+            <i class="fa-solid fa-bolt fa-bounce" aria-hidden="true"></i>
             <div><b>Built to scale</b><p>Architecture and systems made for growth.</p></div>
           </div>
         </div>
@@ -1768,42 +1883,42 @@ p{ color: var(--ink-dim); }
       <div class="faq-item reveal" style="--i:0">
         <div class="faq-q" data-faq-toggle>
           <h4>How long does a typical project take?</h4>
-          <i class="fa-solid fa-plus"></i>
+          <i class="fa-solid fa-plus" aria-hidden="true"></i>
         </div>
         <div class="faq-a"><div class="faq-a-inner">Timelines depend on scope: a marketing site typically takes 2 to 4 weeks, while a full product design and development engagement runs 8 to 16 weeks. We'll give you a precise timeline after our discovery call.</div></div>
       </div>
       <div class="faq-item reveal" style="--i:1">
         <div class="faq-q" data-faq-toggle>
           <h4>Do you work with startups or only enterprise clients?</h4>
-          <i class="fa-solid fa-plus"></i>
+          <i class="fa-solid fa-plus" aria-hidden="true"></i>
         </div>
         <div class="faq-a"><div class="faq-a-inner">Both. Our Starter and Growth plans are built for early-stage and scaling companies, while our Premium tier serves enterprise teams needing dedicated resourcing and custom software.</div></div>
       </div>
       <div class="faq-item reveal" style="--i:2">
         <div class="faq-q" data-faq-toggle>
           <h4>What does the payment structure look like?</h4>
-          <i class="fa-solid fa-plus"></i>
+          <i class="fa-solid fa-plus" aria-hidden="true"></i>
         </div>
         <div class="faq-a"><div class="faq-a-inner">Most engagements are split into three milestones: 40% at kickoff, 30% at design approval, and 30% at launch. Retainer and monthly billing options are available for ongoing partnerships.</div></div>
       </div>
       <div class="faq-item reveal" style="--i:3">
         <div class="faq-q" data-faq-toggle>
           <h4>Will I own the final designs and code?</h4>
-          <i class="fa-solid fa-plus"></i>
+          <i class="fa-solid fa-plus" aria-hidden="true"></i>
         </div>
         <div class="faq-a"><div class="faq-a-inner">Absolutely. Once final payment is received, full ownership of all design files, source code and assets transfers to you: no licensing fees, no lock-in.</div></div>
       </div>
       <div class="faq-item reveal" style="--i:4">
         <div class="faq-q" data-faq-toggle>
           <h4>Do you offer support after launch?</h4>
-          <i class="fa-solid fa-plus"></i>
+          <i class="fa-solid fa-plus" aria-hidden="true"></i>
         </div>
         <div class="faq-a"><div class="faq-a-inner">Yes, every plan includes a support window post-launch, and we offer ongoing retainer packages for ongoing iteration, monitoring and optimization work.</div></div>
       </div>
       <div class="faq-item reveal" style="--i:5">
         <div class="faq-q" data-faq-toggle>
           <h4>Can you work with our existing in-house team?</h4>
-          <i class="fa-solid fa-plus"></i>
+          <i class="fa-solid fa-plus" aria-hidden="true"></i>
         </div>
         <div class="faq-a"><div class="faq-a-inner">Definitely. We regularly collaborate alongside internal design, product and engineering teams, either leading a workstream or supporting yours as an extension of it.</div></div>
       </div>
@@ -1820,27 +1935,27 @@ p{ color: var(--ink-dim); }
       <h2>Let's build something worth remembering.</h2>
       <p>Tell us about your project and we'll respond within one business day with next steps, or book a free 30-minute discovery call directly.</p>
       <div class="contact-detail">
-        <i class="fa-solid fa-envelope ico-bounce"></i>
-        <div><b>hello@novique.agency</b><span>General &amp; project inquiries</span></div>
+        <i class="fa-solid fa-envelope fa-bounce" aria-hidden="true"></i>
+        <div><b>hello@novique.design</b><span>General &amp; project inquiries</span></div>
       </div>
       <div class="contact-detail">
-        <i class="fa-solid fa-phone ico-sway"></i>
+        <i class="fa-solid fa-phone fa-shake" aria-hidden="true"></i>
         <div><b>+1 (415) 555-0192</b><span>Mon to Fri, 9am to 6pm EST</span></div>
       </div>
       <div class="contact-detail">
-        <i class="fa-solid fa-location-dot ico-bounce"></i>
+        <i class="fa-solid fa-location-dot fa-bounce" aria-hidden="true"></i>
         <div><b>Remote-first studio</b><span>Working with clients everywhere</span></div>
       </div>
       <div class="contact-social">
-        <a href="#" aria-label="NoviQue on Instagram"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#" aria-label="NoviQue on LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-        <a href="#" aria-label="NoviQue on X"><i class="fa-brands fa-x-twitter"></i></a>
-        <a href="#" aria-label="NoviQue on Dribbble"><i class="fa-brands fa-dribbble"></i></a>
-        <a href="#" aria-label="NoviQue on Behance"><i class="fa-brands fa-behance"></i></a>
+        <a href="#" aria-label="NoviQue on Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+        <a href="#" aria-label="NoviQue on LinkedIn"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+        <a href="#" aria-label="NoviQue on X"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+        <a href="#" aria-label="NoviQue on Dribbble"><i class="fa-brands fa-dribbble" aria-hidden="true"></i></a>
+        <a href="#" aria-label="NoviQue on Behance"><i class="fa-brands fa-behance" aria-hidden="true"></i></a>
       </div>
     </div>
     <form class="contact-form reveal" id="contactForm" novalidate>
-      <div class="form-success" id="formSuccess"><i class="fa-solid fa-circle-check"></i> Thanks, your message has been sent. We'll be in touch within one business day.</div>
+      <div class="form-success" id="formSuccess"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Thanks, your message has been sent. We'll be in touch within one business day.</div>
       <div class="form-row">
         <div class="form-group">
           <label for="fname">Full Name</label>
@@ -1857,19 +1972,19 @@ p{ color: var(--ink-dim); }
           <div class="cselect" id="fserviceSelect">
             <button type="button" class="cselect-trigger" id="fserviceTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="fserviceLabel">
               <span class="cselect-value">Website Design</span>
-              <i class="fa-solid fa-chevron-down ico-caret"></i>
+              <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
             </button>
             <ul class="cselect-panel" role="listbox" aria-label="Service Needed">
-              <li class="cselect-option active" role="option" aria-selected="true" data-value="Website Design"><i class="fa-solid fa-check"></i> Website Design</li>
-              <li class="cselect-option" role="option" aria-selected="false" data-value="Web Development"><i class="fa-solid fa-check"></i> Web Development</li>
-              <li class="cselect-option" role="option" aria-selected="false" data-value="Mobile App Design"><i class="fa-solid fa-check"></i> Mobile App Design</li>
-              <li class="cselect-option" role="option" aria-selected="false" data-value="UI/UX Design"><i class="fa-solid fa-check"></i> UI/UX Design</li>
-              <li class="cselect-option" role="option" aria-selected="false" data-value="Branding"><i class="fa-solid fa-check"></i> Branding</li>
-              <li class="cselect-option" role="option" aria-selected="false" data-value="AI Solutions"><i class="fa-solid fa-check"></i> AI Solutions</li>
-              <li class="cselect-option" role="option" aria-selected="false" data-value="Digital Marketing"><i class="fa-solid fa-check"></i> Digital Marketing</li>
-              <li class="cselect-option" role="option" aria-selected="false" data-value="SEO"><i class="fa-solid fa-check"></i> SEO</li>
-              <li class="cselect-option" role="option" aria-selected="false" data-value="Custom Software"><i class="fa-solid fa-check"></i> Custom Software</li>
-              <li class="cselect-option" role="option" aria-selected="false" data-value="Not sure yet"><i class="fa-solid fa-check"></i> Not sure yet</li>
+              <li class="cselect-option active" role="option" aria-selected="true" data-value="Website Design"><i class="fa-solid fa-check" aria-hidden="true"></i> Website Design</li>
+              <li class="cselect-option" role="option" aria-selected="false" data-value="Web Development"><i class="fa-solid fa-check" aria-hidden="true"></i> Web Development</li>
+              <li class="cselect-option" role="option" aria-selected="false" data-value="Mobile App Design"><i class="fa-solid fa-check" aria-hidden="true"></i> Mobile App Design</li>
+              <li class="cselect-option" role="option" aria-selected="false" data-value="UI/UX Design"><i class="fa-solid fa-check" aria-hidden="true"></i> UI/UX Design</li>
+              <li class="cselect-option" role="option" aria-selected="false" data-value="Branding"><i class="fa-solid fa-check" aria-hidden="true"></i> Branding</li>
+              <li class="cselect-option" role="option" aria-selected="false" data-value="AI Solutions"><i class="fa-solid fa-check" aria-hidden="true"></i> AI Solutions</li>
+              <li class="cselect-option" role="option" aria-selected="false" data-value="Digital Marketing"><i class="fa-solid fa-check" aria-hidden="true"></i> Digital Marketing</li>
+              <li class="cselect-option" role="option" aria-selected="false" data-value="SEO"><i class="fa-solid fa-check" aria-hidden="true"></i> SEO</li>
+              <li class="cselect-option" role="option" aria-selected="false" data-value="Custom Software"><i class="fa-solid fa-check" aria-hidden="true"></i> Custom Software</li>
+              <li class="cselect-option" role="option" aria-selected="false" data-value="Not sure yet"><i class="fa-solid fa-check" aria-hidden="true"></i> Not sure yet</li>
             </ul>
             <input type="hidden" name="fservice" id="fserviceInput" value="Website Design">
           </div>
@@ -1879,13 +1994,13 @@ p{ color: var(--ink-dim); }
           <div class="cselect" id="fbudgetSelect">
             <button type="button" class="cselect-trigger" id="fbudgetTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="fbudgetLabel">
               <span class="cselect-value">Under $3,000</span>
-              <i class="fa-solid fa-chevron-down ico-caret"></i>
+              <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
             </button>
             <ul class="cselect-panel" role="listbox" aria-label="Estimated Budget">
-              <li class="cselect-option active" role="option" aria-selected="true" data-value="Under $3,000"><i class="fa-solid fa-check"></i> Under $3,000</li>
-              <li class="cselect-option" role="option" aria-selected="false" data-value="$3,000 to $8,000"><i class="fa-solid fa-check"></i> $3,000 to $8,000</li>
-              <li class="cselect-option" role="option" aria-selected="false" data-value="$8,000 to $20,000"><i class="fa-solid fa-check"></i> $8,000 to $20,000</li>
-              <li class="cselect-option" role="option" aria-selected="false" data-value="$20,000+"><i class="fa-solid fa-check"></i> $20,000+</li>
+              <li class="cselect-option active" role="option" aria-selected="true" data-value="Under $3,000"><i class="fa-solid fa-check" aria-hidden="true"></i> Under $3,000</li>
+              <li class="cselect-option" role="option" aria-selected="false" data-value="$3,000 to $8,000"><i class="fa-solid fa-check" aria-hidden="true"></i> $3,000 to $8,000</li>
+              <li class="cselect-option" role="option" aria-selected="false" data-value="$8,000 to $20,000"><i class="fa-solid fa-check" aria-hidden="true"></i> $8,000 to $20,000</li>
+              <li class="cselect-option" role="option" aria-selected="false" data-value="$20,000+"><i class="fa-solid fa-check" aria-hidden="true"></i> $20,000+</li>
             </ul>
             <input type="hidden" name="fbudget" id="fbudgetInput" value="Under $3,000">
           </div>
@@ -1895,7 +2010,7 @@ p{ color: var(--ink-dim); }
         <label for="fmessage">Project Details</label>
         <textarea id="fmessage" name="fmessage" placeholder="Tell us about your goals, timeline, and anything else we should know..." required></textarea>
       </div>
-      <button type="submit" class="btn btn-primary btn-block">Send Project Inquiry <i class="fa-solid fa-paper-plane ico-sway"></i></button>
+      <button type="submit" class="btn btn-primary btn-block">Send Project Inquiry <i class="fa-solid fa-paper-plane fa-shake" aria-hidden="true"></i></button>
       <p class="form-note">By submitting, you agree to our <a href="#" style="color:var(--ink-dim); text-decoration:underline;">Privacy Policy</a>. No spam, ever.</p>
     </form>
   </div>
@@ -1922,7 +2037,7 @@ p{ color: var(--ink-dim); }
 
 <!-- ============ FOOTER ============ -->
 <footer class="site-footer" aria-label="Site footer">
-  <div class="brand-watermark" aria-hidden="true"><img src="https://i.ibb.co/WNtMTYc0/banner-final.png" alt=""></div>
+  <div class="brand-watermark" aria-hidden="true"><img src="https://i.ibb.co/bZ2KDvg/banner-final.png" alt=""></div>
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
@@ -1931,12 +2046,12 @@ p{ color: var(--ink-dim); }
           <span>NoviQue</span>
         </div>
         <p>An independent design studio crafting thoughtful websites, apps and brand experiences: designed to inspire, engineered to perform.</p>
-        <img src="https://i.ibb.co/WNtMTYc0/banner-final.png" alt="NoviQue, Designed to Inspire" class="footer-banner">
+        <img src="https://i.ibb.co/bZ2KDvg/banner-final.png" alt="NoviQue, Designed to Inspire" class="footer-banner">
         <div class="contact-social">
-          <a href="#" aria-label="NoviQue on Instagram"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#" aria-label="NoviQue on LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-          <a href="#" aria-label="NoviQue on X"><i class="fa-brands fa-x-twitter"></i></a>
-          <a href="#" aria-label="NoviQue on Dribbble"><i class="fa-brands fa-dribbble"></i></a>
+          <a href="#" aria-label="NoviQue on Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+          <a href="#" aria-label="NoviQue on LinkedIn"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+          <a href="#" aria-label="NoviQue on X"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+          <a href="#" aria-label="NoviQue on Dribbble"><i class="fa-brands fa-dribbble" aria-hidden="true"></i></a>
         </div>
       </div>
       <div class="footer-col">
@@ -1982,7 +2097,7 @@ p{ color: var(--ink-dim); }
   </div>
 </footer>
 
-<button class="back-to-top" id="backToTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up ico-bounce"></i></button>
+<button class="back-to-top" id="backToTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up fa-bounce" aria-hidden="true"></i></button>
 
 <!-- ============ CUSTOM RIGHT-CLICK CONTEXT MENU ============ -->
 <div class="custom-context-menu" id="customContextMenu" role="menu" aria-hidden="true">
@@ -1991,17 +2106,17 @@ p{ color: var(--ink-dim); }
     <span>NoviQue</span>
   </div>
   <ul class="ccm-list">
-    <li><button class="ccm-item" data-action="home" role="menuitem"><i class="fa-solid fa-house"></i> Go to Home</button></li>
-    <li><button class="ccm-item" data-action="portfolio" role="menuitem"><i class="fa-solid fa-briefcase"></i> View Portfolio</button></li>
-    <li><button class="ccm-item" data-action="contact" role="menuitem"><i class="fa-solid fa-paper-plane"></i> Start a Project</button></li>
+    <li><button class="ccm-item" data-action="home" role="menuitem"><i class="fa-solid fa-house" aria-hidden="true"></i> Go to Home</button></li>
+    <li><button class="ccm-item" data-action="portfolio" role="menuitem"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> View Portfolio</button></li>
+    <li><button class="ccm-item" data-action="contact" role="menuitem"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Start a Project</button></li>
     <li class="ccm-divider" role="separator"></li>
-    <li><button class="ccm-item" data-action="copy-link" role="menuitem"><i class="fa-solid fa-link"></i> Copy Page Link</button></li>
-    <li><button class="ccm-item" data-action="reload" role="menuitem"><i class="fa-solid fa-arrows-rotate"></i> Reload Page</button></li>
+    <li><button class="ccm-item" data-action="copy-link" role="menuitem"><i class="fa-solid fa-link" aria-hidden="true"></i> Copy Page Link</button></li>
+    <li><button class="ccm-item" data-action="reload" role="menuitem"><i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i> Reload Page</button></li>
     <li class="ccm-divider" role="separator"></li>
-    <li><button class="ccm-item" data-action="top" role="menuitem"><i class="fa-solid fa-arrow-up"></i> Back to Top</button></li>
+    <li><button class="ccm-item" data-action="top" role="menuitem"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i> Back to Top</button></li>
   </ul>
 </div>
-<div class="ccm-toast" id="ccmToast"><i class="fa-solid fa-circle-check"></i> <span id="ccmToastText">Done</span></div>
+<div class="ccm-toast" id="ccmToast"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> <span id="ccmToastText">Done</span></div>
 
 <script>
 (function(){
@@ -2012,6 +2127,52 @@ p{ color: var(--ink-dim); }
     var loader = document.getElementById('loader');
     setTimeout(function(){ loader.classList.add('hidden'); }, 400);
   });
+
+  /* ---------- Hero 3D scene (Spline) with graceful fallback ---------- */
+  (function initHero3D(){
+    var wrap = document.querySelector('.hero-3d');
+    if(!wrap) return;
+    var viewer = document.getElementById('heroSpline');
+    var fallback = document.getElementById('hero3dFallback');
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var isNarrow = window.matchMedia('(max-width: 640px)').matches;
+
+    function showFallback(){
+      if(viewer) viewer.style.display = 'none';
+      if(fallback) fallback.style.display = 'flex';
+    }
+
+    if(reduceMotion || isNarrow || !viewer){
+      showFallback();
+      return;
+    }
+
+    // Give the custom element a limited window to register + load;
+    // if @splinetool/viewer fails to fetch (network restrictions, ad-blockers, etc.)
+    // fall back to the CSS orb scene instead of leaving an empty box.
+    var settled = false;
+    var failTimer = setTimeout(function(){
+      if(!settled){ settled = true; showFallback(); }
+    }, 6000);
+
+    viewer.addEventListener('load', function(){
+      if(settled) return;
+      settled = true;
+      clearTimeout(failTimer);
+      viewer.classList.add('spline-ready');
+    });
+    viewer.addEventListener('error', function(){
+      if(settled) return;
+      settled = true;
+      clearTimeout(failTimer);
+      showFallback();
+    });
+
+    // If the custom element never upgrades (script blocked/unavailable), catch that too.
+    customElements.whenDefined('spline-viewer').catch(function(){
+      if(!settled){ settled = true; clearTimeout(failTimer); showFallback(); }
+    });
+  })();
 
   /* ---------- Navbar scroll state ---------- */
   var navbar = document.getElementById('navbar');
@@ -2222,7 +2383,7 @@ p{ color: var(--ink-dim); }
       e.preventDefault();
       var btn = newsletterForm.querySelector('button');
       var original = btn.innerHTML;
-      btn.innerHTML = '<i class="fa-solid fa-check"></i> Subscribed';
+      btn.innerHTML = '<i class="fa-solid fa-check" aria-hidden="true"></i> Subscribed';
       newsletterForm.reset();
       setTimeout(function(){ btn.innerHTML = original; }, 2600);
     });
