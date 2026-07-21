@@ -367,10 +367,16 @@ p{ color: var(--ink-dim); }
   transition: transform .3s var(--ease);
   flex-shrink:0;
 }
-.nav-logo-word{ height: 22px; width:auto; }
+.nav-logo-text{
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--white);
+}
 .nav-logo:hover .nav-logo-mark{ transform: scale(1.06) rotate(-4deg); }
 @media (max-width:520px){
-  .nav-logo-word{ display:none; }
+  .nav-logo-text{ display:none; }
   .nav-logo-mark{ height:38px; width:38px; }
 }
 
@@ -1122,7 +1128,7 @@ p{ color: var(--ink-dim); }
   <div class="container nav-inner">
     <a href="#main" class="nav-logo" aria-label="NoviQue, Home">
       <img src="https://i.ibb.co/PGpwKRRx/logo-final.png" alt="" class="nav-logo-mark">
-      <img src="https://i.ibb.co/WNtMTYc0/banner-final.png" alt="NoviQue" class="nav-logo-word">
+      <span class="nav-logo-text">NoviQue</span>
     </a>
     <nav class="nav-links" id="navLinks" aria-label="Primary">
       <a href="#main">Home</a>
