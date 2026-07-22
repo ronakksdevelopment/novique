@@ -2885,7 +2885,8 @@ var NOVA_CONFIG = {
     body.scrollTop = body.scrollHeight;
   }
 
-  function renderMessage(role, text){
+  function renderMessage(role, text, opts){
+    opts = opts || {};
     var wrap = document.createElement('div');
     wrap.className = 'nova-msg ' + (role === 'user' ? 'user' : 'bot');
 
@@ -2899,17 +2900,56 @@ var NOVA_CONFIG = {
 
     var bubble = document.createElement('div');
     bubble.className = 'nova-msg-bubble';
-    var paras = String(text).split(/\n{2,}/);
-    paras.forEach(function(p){
-      var pEl = document.createElement('p');
-      pEl.textContent = p;
-      bubble.appendChild(pEl);
-    });
 
     wrap.appendChild(avatar);
     wrap.appendChild(bubble);
     body.appendChild(wrap);
+
+    if(opts.typewriter){
+      typewriterInto(bubble, String(text));
+    } else {
+      var paras = String(text).split(/\n{2,}/);
+      paras.forEach(function(p){
+        var pEl = document.createElement('p');
+        pEl.textContent = p;
+        bubble.appendChild(pEl);
+      });
+    }
+
     scrollToBottom();
+    return bubble;
+  }
+
+  function typewriterInto(bubble, text){
+    var paras = String(text).split(/\n{2,}/);
+    var pIndex = 0;
+    var cIndex = 0;
+    var currentP = null;
+
+    function step(){
+      if(pIndex >= paras.length){ return; }
+      if(!currentP){
+        currentP = document.createElement('p');
+        bubble.appendChild(currentP);
+        cIndex = 0;
+      }
+      var para = paras[pIndex];
+      var charsThisTick = 1;
+      cIndex += charsThisTick;
+      currentP.textContent = para.slice(0, cIndex);
+      scrollToBottom();
+
+      if(cIndex >= para.length){
+        pIndex += 1;
+        currentP = null;
+        if(pIndex < paras.length){
+          setTimeout(step, 60);
+        }
+        return;
+      }
+      setTimeout(step, 14);
+    }
+    step();
   }
 
   function renderAllHistory(){
@@ -3015,9 +3055,9 @@ var NOVA_CONFIG = {
     saveHistory();
   }
 
-  function addBotMessage(text){
+  function addBotMessage(text, opts){
     history.push({ role: 'assistant', content: text });
-    renderMessage('assistant', text);
+    renderMessage('assistant', text, opts);
     saveHistory();
   }
 
@@ -3026,10 +3066,6 @@ var NOVA_CONFIG = {
   }
 
   function callOpenRouter(userText){
-    if(!NOVA_CONFIG.apiKey || NOVA_CONFIG.apiKey === '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'){
-      return Promise.resolve("Nova isn't fully connected yet. Add an OpenRouter API key in the site code to turn on live answers. In the meantime, feel free to use the quick questions above or reach out through the contact form.");
-    }
-
     var messages = [{ role: 'system', content: NOVA_SYSTEM_PROMPT }];
     var recent = history.slice(-10);
     recent.forEach(function(m){
@@ -3079,7 +3115,7 @@ var NOVA_CONFIG = {
     if(faqAnswer){
       setTimeout(function(){
         hideTyping();
-        addBotMessage(faqAnswer);
+        addBotMessage(faqAnswer, { typewriter: true });
         setSending(false);
       }, 500);
       return;
@@ -3087,7 +3123,7 @@ var NOVA_CONFIG = {
 
     callOpenRouter(text).then(function(reply){
       hideTyping();
-      addBotMessage(reply);
+      addBotMessage(reply, { typewriter: true });
       setSending(false);
     });
   }
