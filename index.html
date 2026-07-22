@@ -1641,7 +1641,8 @@ i[class*="fa-"]{
     width:4px; height:26px; margin:-13px 0 0 -2px; border-radius:2px;
     border-color: var(--lime); background: var(--lime);
   }
-  .doodle-ring.click{ transform: translate(-100px,-100px) scale(0.82); }
+  /* Squash-on-click is applied via inline transform in the JS animation loop,
+     not here — a CSS rule here would race the loop and flicker for one frame. */
 
   .doodle-scribble{
     position:fixed; top:0; left:0; z-index:9997; pointer-events:none;
@@ -3610,6 +3611,21 @@ var NOVA_CONFIG = {
   closeBtn2.addEventListener('click', closeWindow);
   menuBtn.addEventListener('click', toggleMenu);
   clearBtn.addEventListener('click', clearChat);
+
+  newChatBtn.addEventListener('click', function(){
+    startNewSession(true);
+    closeMenu();
+  });
+  historyBtn.addEventListener('click', openHistoryPanel);
+  historyMenuBtn.addEventListener('click', function(){
+    openHistoryPanel();
+    closeMenu();
+  });
+  historyBack.addEventListener('click', closeHistoryPanel);
+  historyNewBtn.addEventListener('click', function(){
+    startNewSession(true);
+    closeHistoryPanel();
+  });
 
   document.addEventListener('click', function(e){
     if(!menu.contains(e.target) && !menuBtn.contains(e.target)){
