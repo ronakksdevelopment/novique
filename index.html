@@ -3097,12 +3097,13 @@ i[class*="fa-"]{
 var NOVA_CONFIG = {
     apiKey: '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',
     endpoint: 'https://openrouter.ai/api/v1/chat/completions',
-model: 'deepseek/deepseek-r1:free',
-modelFallbacks: [
-  'qwen/qwen3-coder:free',
-  'meta-llama/llama-3.3-70b-instruct:free',
-  'google/gemma-3-12b-it:free'
-],
+    model: 'tencent/hy3:free',
+    modelFallbacks: [
+      'poolside/laguna-xs-2.1:free',
+      'poolside/laguna-m.1:free',
+      'cohere/north-mini-code:free',
+      'nvidia/nemotron-3-ultra-550b-a55b:free'
+    ],
     siteUrl: 'https://ronakksdevelopment.github.io/novique/',
     siteName: 'NoviQue'
   };
@@ -3519,16 +3520,17 @@ modelFallbacks: [
   }
 
   function isApiKeyConfigured(){
-    var key = NOVA_CONFIG.apiKey;
-    return !!key && key.indexOf('YOUR_') !== 0 && key.trim() !== '';
+    var key = NOVA_CONFIG.apiKey && NOVA_CONFIG.apiKey.trim();
+    return !!key && key.indexOf('YOUR_') !== 0 && key !== '';
   }
 
   function requestChatCompletion(model, messages){
+    var key = NOVA_CONFIG.apiKey.trim();
     return fetch(NOVA_CONFIG.endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + NOVA_CONFIG.apiKey,
+        'Authorization': 'Bearer ' + key,
         'HTTP-Referer': NOVA_CONFIG.siteUrl,
         'X-Title': NOVA_CONFIG.siteName
       },
@@ -3538,37 +3540,22 @@ modelFallbacks: [
         max_tokens: 500,
         temperature: 0.6
       })
-    }).then(async function(res){
-
-    var data = await res.json();
-
-    if(!res.ok){
-
-        console.error("OpenRouter Error:", data);
-
-        throw new Error(
-            data.error?.message ||
-            data.message ||
-            ("HTTP " + res.status)
-        );
-    }
-
-    var reply =
-        data &&
-        data.choices &&
-        data.choices[0] &&
-        data.choices[0].message &&
-        data.choices[0].message.content;
-
-    if(!reply){
-        throw new Error("Empty response");
-    }
-
-    return reply.trim();
-})
+    }).then(function(res){
+      if(!res.ok){
+        return res.text().then(function(bodyText){
+          // Surface the real reason in the console so failures are diagnosable
+          // instead of silently falling through to the next model.
+          console.error('[Nova] ' + model + ' failed with status ' + res.status + ': ' + bodyText);
+          throw new Error('Request failed with status ' + res.status);
+        });
+      }
+      return res.json();
     }).then(function(data){
       var reply = data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
-      if(!reply){ throw new Error('Empty response'); }
+      if(!reply){
+        console.error('[Nova] ' + model + ' returned an empty response', data);
+        throw new Error('Empty response');
+      }
       return reply.trim();
     });
   }
@@ -3589,23 +3576,18 @@ modelFallbacks: [
     var modelsToTry = [NOVA_CONFIG.model].concat(NOVA_CONFIG.modelFallbacks || []);
     var attempt = 0;
 
-function tryNext(){
-
-    if(attempt >= modelsToTry.length){
-        throw new Error("All models failed");
+    function tryNext(){
+      if(attempt >= modelsToTry.length){
+        console.error('[Nova] All models failed (' + modelsToTry.join(', ') + '). Showing fallback reply to user.');
+        return fallbackReply();
+      }
+      var model = modelsToTry[attempt];
+      attempt += 1;
+      return requestChatCompletion(model, messages).catch(function(err){
+        console.warn('[Nova] Model ' + model + ' failed, trying next. Reason: ' + err.message);
+        return tryNext();
+      });
     }
-
-    var model = modelsToTry[attempt++];
-
-    return requestChatCompletion(model, messages)
-        .catch(function(err){
-
-            console.warn("Model failed:", model, err);
-
-            return tryNext();
-        });
-
-}
 
     return tryNext();
   }
@@ -3631,22 +3613,11 @@ function tryNext(){
       return;
     }
 
-callOpenRouter(text)
-.then(function(reply){
-    hideTyping();
-    addBotMessage(reply, { typewriter:true });
-})
-.catch(function(err){
-    hideTyping();
-    addBotMessage(
-        "Sorry, I'm temporarily unavailable.\n\n" +
-        err.message,
-        { typewriter:true }
-    );
-})
-.finally(function(){
-    setSending(false);
-});
+    callOpenRouter(text).then(function(reply){
+      hideTyping();
+      addBotMessage(reply, { typewriter: true });
+      setSending(false);
+    });
   }
 
   launcher.addEventListener('click', toggleWindow);
