@@ -108,6 +108,35 @@ body{
 }
 
 img{ max-width:100%; display:block; }
+
+/* Photo treatment: greyscale base photo, no color overlay.
+   Only applies to real photographs (wrapped in .photo-fx). Logos, icons,
+   avatars-that-are-brand-marks, and all other UI elements stay original. */
+.photo-fx{
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.photo-fx img{
+  filter: grayscale(1) contrast(1.05);
+}
+/* Match each photo context's existing corner rounding on the wrapper itself */
+.card-main .photo-fx{ border-radius:10px; height:60%; margin-bottom:1rem; }
+.card-main .photo-fx img{ height:100%; }
+.case-body-inner .photo-fx{ border-radius: var(--radius-sm); }
+.about-visual-frame .photo-fx{ border-radius: inherit; }
+/* Circular photo contexts: testimonial avatars and the chat-card headshot */
+.testi-person .photo-fx{
+  width:50px; height:50px; display:inline-block;
+  border-radius:50%; border:2px solid var(--border-lime);
+}
+.testi-person .photo-fx img{ width:100%; height:100%; }
+.card-chat .photo-fx{
+  width:28px; height:28px; display:inline-block; border-radius:50%;
+}
+.card-chat .photo-fx img{ width:100%; height:100%; }
 a{ color: inherit; text-decoration: none; }
 ul{ list-style: none; }
 button{ font-family: inherit; cursor: pointer; border:none; background:none; color:inherit; }
@@ -1200,6 +1229,185 @@ i[class*="fa-"]{
 .trust-track span:nth-child(odd){ transform: rotate(-2deg); }
 .trust-track span:nth-child(even){ transform: rotate(2deg); }
 
+/* ============================================
+   NOVA CHATBOT WIDGET
+   Floating assistant, black / green / lime theme.
+   Version 1.0, built by and for NoviQue.
+   ============================================ */
+.nova-launcher{
+  position: fixed; right: 2rem; bottom: 2rem; z-index: 980;
+  width: 60px; height: 60px; border-radius: 50%;
+  background: var(--lime); color:#14150C;
+  display:flex; align-items:center; justify-content:center;
+  border:none; cursor:pointer;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  transition: transform .25s var(--ease), background .2s ease;
+}
+.nova-launcher:hover{ transform: translateY(-4px) scale(1.05); background:#C7FF33; }
+.nova-launcher i{ font-size:1.35rem; }
+.nova-launcher .nova-icon-close{ display:none; }
+.nova-launcher.open .nova-icon-chat{ display:none; }
+.nova-launcher.open .nova-icon-close{ display:block; }
+.nova-launcher .nova-dot{
+  position:absolute; top:4px; right:4px; width:12px; height:12px;
+  border-radius:50%; background:#FF5C4D; border:2px solid var(--bg);
+  display:none;
+}
+.nova-launcher .nova-dot.show{ display:block; }
+@media (max-width:640px){
+  .nova-launcher{ right:1.1rem; bottom:1.1rem; width:52px; height:52px; }
+}
+
+.nova-window{
+  position: fixed; right: 2rem; bottom: 5.6rem; z-index: 981;
+  width: 380px; max-width: calc(100vw - 2.4rem);
+  height: min(600px, 76vh);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-lime);
+  border-radius: var(--radius-lg);
+  display:flex; flex-direction:column;
+  overflow:hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  opacity:0; visibility:hidden; transform: translateY(16px) scale(0.98);
+  transform-origin: bottom right;
+  transition: opacity .22s var(--ease), transform .22s var(--ease), visibility .22s;
+}
+.nova-window.open{ opacity:1; visibility:visible; transform: translateY(0) scale(1); }
+@media (max-width:640px){
+  .nova-window{
+    right:0.6rem; left:0.6rem; bottom:0.6rem;
+    width:auto; height: min(78vh, 620px);
+  }
+}
+
+.nova-head{
+  display:flex; align-items:center; gap:0.7rem;
+  padding: 1rem 1.1rem; background:#14150C;
+  border-bottom: 1px solid var(--border-soft);
+  flex-shrink:0;
+}
+.nova-head-avatar{
+  width:38px; height:38px; border-radius:50%;
+  background: var(--dark-green); display:flex; align-items:center; justify-content:center;
+  color: var(--lime); flex-shrink:0; position:relative;
+}
+.nova-head-avatar i{ font-size:1.05rem; }
+.nova-head-status{
+  position:absolute; bottom:-1px; right:-1px; width:11px; height:11px;
+  border-radius:50%; background:#5FD068; border:2px solid #14150C;
+}
+.nova-head-info{ flex:1; min-width:0; }
+.nova-head-info b{ display:block; color:var(--white); font-family:var(--font-display); font-size:0.98rem; font-weight:400; }
+.nova-head-info span{ font-size:0.76rem; color: var(--ink-faint); }
+.nova-head-actions{ display:flex; gap:0.3rem; flex-shrink:0; }
+.nova-menu-wrap{ position:relative; }
+.nova-head-btn{
+  width:32px; height:32px; border-radius:9px; border:none;
+  background:transparent; color: var(--ink-dim); cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition: background .15s ease, color .15s ease;
+}
+.nova-head-btn:hover{ background: var(--dark-green); color: var(--lime); }
+.nova-head-btn i{ font-size:0.92rem; }
+
+.nova-menu{
+  position:absolute; top:calc(100% + 6px); right:0; z-index:5;
+  min-width:170px; background:#0F0F0E; border:1px solid var(--border-lime);
+  border-radius:12px; padding:0.4rem;
+  opacity:0; visibility:hidden; transform: translateY(-6px);
+  transition: opacity .15s ease, transform .15s ease, visibility .15s;
+}
+.nova-menu.show{ opacity:1; visibility:visible; transform:translateY(0); }
+.nova-menu button{
+  display:flex; align-items:center; gap:0.6rem; width:100%;
+  padding:0.55rem 0.65rem; border-radius:8px; border:none;
+  background:transparent; color:var(--ink-dim); font-size:0.82rem;
+  font-family:var(--font-body); font-weight:700; cursor:pointer; text-align:left;
+}
+.nova-menu button:hover{ background: var(--dark-green); color:var(--white); }
+.nova-menu button i{ width:15px; font-size:0.8em; color:var(--ink-faint); }
+.nova-menu button:hover i{ color:var(--lime); }
+
+.nova-body{
+  flex:1; overflow-y:auto; padding: 1rem 1.1rem;
+  display:flex; flex-direction:column; gap:0.85rem;
+  background: var(--bg-elevated);
+}
+.nova-body::-webkit-scrollbar{ width:6px; }
+.nova-body::-webkit-scrollbar-thumb{ background: var(--border-lime); border-radius:99px; }
+
+.nova-msg{ display:flex; gap:0.55rem; max-width:88%; }
+.nova-msg.bot{ align-self:flex-start; }
+.nova-msg.user{ align-self:flex-end; flex-direction:row-reverse; }
+.nova-msg-avatar{
+  width:26px; height:26px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:0.72rem;
+  background: var(--dark-green); color: var(--lime); margin-top:2px;
+}
+.nova-msg.user .nova-msg-avatar{ background: var(--bg-elevated-2); color: var(--ink-dim); }
+.nova-msg-bubble{
+  padding:0.65rem 0.85rem; border-radius:14px; font-size:0.86rem; line-height:1.55;
+  font-family:var(--font-body); font-weight:700;
+}
+.nova-msg.bot .nova-msg-bubble{
+  background: var(--bg-elevated-2); color: var(--ink); border-bottom-left-radius:4px;
+}
+.nova-msg.user .nova-msg-bubble{
+  background: var(--dark-green); color: var(--white); border-bottom-right-radius:4px;
+}
+.nova-msg-bubble p{ margin:0 0 0.5rem; }
+.nova-msg-bubble p:last-child{ margin-bottom:0; }
+
+.nova-typing{ display:flex; gap:0.55rem; align-self:flex-start; align-items:center; }
+.nova-typing-dots{
+  display:flex; gap:4px; background: var(--bg-elevated-2); padding:0.65rem 0.9rem; border-radius:14px; border-bottom-left-radius:4px;
+}
+.nova-typing-dots span{
+  width:6px; height:6px; border-radius:50%; background: var(--ink-faint);
+  animation: novaBlink 1.2s infinite ease-in-out;
+}
+.nova-typing-dots span:nth-child(2){ animation-delay:0.15s; }
+.nova-typing-dots span:nth-child(3){ animation-delay:0.3s; }
+@keyframes novaBlink{ 0%,80%,100%{ opacity:0.3; transform:scale(0.85); } 40%{ opacity:1; transform:scale(1); } }
+
+.nova-faq{
+  display:flex; flex-wrap:wrap; gap:0.5rem; padding: 0 1.1rem 0.9rem; flex-shrink:0;
+}
+.nova-faq button{
+  border:1px solid var(--border-lime); background:transparent; color: var(--ink-dim);
+  font-family:var(--font-body); font-weight:700; font-size:0.76rem;
+  padding:0.45rem 0.8rem; border-radius:999px; cursor:pointer;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.nova-faq button:hover{ background: var(--dark-green); color:var(--white); border-color: var(--lime); }
+
+.nova-input-row{
+  display:flex; align-items:flex-end; gap:0.6rem;
+  padding: 0.85rem 1.1rem; border-top:1px solid var(--border-soft);
+  background:#14150C; flex-shrink:0;
+}
+.nova-input-row textarea{
+  flex:1; resize:none; max-height:96px; min-height:22px;
+  background:transparent; border:none; outline:none;
+  color:var(--white); font-family:var(--font-body); font-weight:700; font-size:0.88rem;
+  line-height:1.4; padding:0.3rem 0;
+}
+.nova-input-row textarea::placeholder{ color: var(--ink-faint); }
+.nova-send{
+  width:38px; height:38px; border-radius:50%; border:none; flex-shrink:0;
+  background: var(--lime); color:#14150C; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition: background .15s ease, transform .15s ease;
+}
+.nova-send:hover{ background:#C7FF33; transform: scale(1.06); }
+.nova-send:disabled{ opacity:0.4; cursor:not-allowed; transform:none; }
+
+.nova-foot{
+  text-align:center; padding:0.5rem 1rem 0.75rem; flex-shrink:0;
+  font-size:0.68rem; color: var(--ink-faint); background:#14150C;
+}
+.nova-foot span{ color: var(--olive); }
+
 </style>
 </head>
 <body>
@@ -1294,7 +1502,7 @@ i[class*="fa-"]{
       </div>
       <div class="hero-card card-main">
         <span class="tag">Case Study</span>
-        <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=600&auto=format&fit=crop" alt="Fintech mobile app dashboard mockup" loading="lazy">
+        <span class="photo-fx"><img src="https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=600&auto=format&fit=crop" alt="Fintech mobile app dashboard mockup" loading="lazy"></span>
         <h4>Orbital Finance App</h4>
         <p>Mobile banking redesign, plus 64% engagement</p>
       </div>
@@ -1440,7 +1648,7 @@ i[class*="fa-"]{
     <div class="portfolio-grid stagger" id="portfolioGrid">
       <article class="project-card reveal" style="--i:0" data-category="app">
         <div class="project-media">
-          <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=700&auto=format&fit=crop" alt="Orbital Finance mobile banking app interface" loading="lazy">
+          <span class="photo-fx"><img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=700&auto=format&fit=crop" alt="Orbital Finance mobile banking app interface" loading="lazy"></span>
           <span class="project-cat">Mobile App</span>
           <div class="project-stats-mini">
             <span><i class="fa-regular fa-eye fa-beat" aria-hidden="true"></i> 2.1k</span>
@@ -1458,7 +1666,7 @@ i[class*="fa-"]{
 
       <article class="project-card reveal" style="--i:1" data-category="web">
         <div class="project-media">
-          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=700&auto=format&fit=crop" alt="Northfield e-commerce website design" loading="lazy">
+          <span class="photo-fx"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=700&auto=format&fit=crop" alt="Northfield e-commerce website design" loading="lazy"></span>
           <span class="project-cat">Web Design</span>
           <div class="project-stats-mini">
             <span><i class="fa-regular fa-eye fa-beat" aria-hidden="true"></i> 1.6k</span>
@@ -1476,7 +1684,7 @@ i[class*="fa-"]{
 
       <article class="project-card reveal" style="--i:2" data-category="brand">
         <div class="project-media">
-          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=700&auto=format&fit=crop" alt="Quanta Health brand identity design" loading="lazy">
+          <span class="photo-fx"><img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=700&auto=format&fit=crop" alt="Quanta Health brand identity design" loading="lazy"></span>
           <span class="project-cat">Branding</span>
           <div class="project-stats-mini">
             <span><i class="fa-regular fa-eye fa-beat" aria-hidden="true"></i> 1.2k</span>
@@ -1494,7 +1702,7 @@ i[class*="fa-"]{
 
       <article class="project-card reveal" style="--i:3" data-category="uiux">
         <div class="project-media">
-          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=700&auto=format&fit=crop" alt="Voltiq SaaS dashboard UI/UX design" loading="lazy">
+          <span class="photo-fx"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=700&auto=format&fit=crop" alt="Voltiq SaaS dashboard UI/UX design" loading="lazy"></span>
           <span class="project-cat">UI/UX</span>
           <div class="project-stats-mini">
             <span><i class="fa-regular fa-eye fa-beat" aria-hidden="true"></i> 1.8k</span>
@@ -1512,7 +1720,7 @@ i[class*="fa-"]{
 
       <article class="project-card reveal" style="--i:4" data-category="app">
         <div class="project-media">
-          <img src="https://images.unsplash.com/photo-1512428813834-c702c7702b78?q=80&w=700&auto=format&fit=crop" alt="Aeroloop travel booking app design" loading="lazy">
+          <span class="photo-fx"><img src="https://images.unsplash.com/photo-1512428813834-c702c7702b78?q=80&w=700&auto=format&fit=crop" alt="Aeroloop travel booking app design" loading="lazy"></span>
           <span class="project-cat">Mobile App</span>
           <div class="project-stats-mini">
             <span><i class="fa-regular fa-eye fa-beat" aria-hidden="true"></i> 1.4k</span>
@@ -1530,7 +1738,7 @@ i[class*="fa-"]{
 
       <article class="project-card reveal" style="--i:5" data-category="web">
         <div class="project-media">
-          <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=700&auto=format&fit=crop" alt="Lumen Retail marketing website design" loading="lazy">
+          <span class="photo-fx"><img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=700&auto=format&fit=crop" alt="Lumen Retail marketing website design" loading="lazy"></span>
           <span class="project-cat">Web Design</span>
           <div class="project-stats-mini">
             <span><i class="fa-regular fa-eye fa-beat" aria-hidden="true"></i> 980</span>
@@ -1576,7 +1784,7 @@ i[class*="fa-"]{
         </div>
         <div class="case-body">
           <div class="case-body-inner">
-            <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=700&auto=format&fit=crop" alt="Orbital Finance app screens" loading="lazy">
+            <span class="photo-fx"><img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=700&auto=format&fit=crop" alt="Orbital Finance app screens" loading="lazy"></span>
             <div>
               <p>Orbital Finance came to us with a functional but dated banking app losing users to sleeker competitors. We rebuilt the experience from research up: simplifying navigation, redesigning the transaction flow, and introducing a calmer visual language.</p>
               <div class="case-meta">
@@ -1604,7 +1812,7 @@ i[class*="fa-"]{
         </div>
         <div class="case-body">
           <div class="case-body-inner">
-            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=700&auto=format&fit=crop" alt="Northfield Goods website screens" loading="lazy">
+            <span class="photo-fx"><img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=700&auto=format&fit=crop" alt="Northfield Goods website screens" loading="lazy"></span>
             <div>
               <p>Northfield needed a storefront that matched the quality of their products. We migrated them to a headless architecture, rebuilt the design system, and layered in technical SEO, turning their site into a genuine growth channel.</p>
               <div class="case-meta">
@@ -1632,7 +1840,7 @@ i[class*="fa-"]{
         </div>
         <div class="case-body">
           <div class="case-body-inner">
-            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=700&auto=format&fit=crop" alt="Voltiq dashboard redesign screens" loading="lazy">
+            <span class="photo-fx"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=700&auto=format&fit=crop" alt="Voltiq dashboard redesign screens" loading="lazy"></span>
             <div>
               <p>Voltiq's dashboard had grown organically for years into something powerful but overwhelming. Through structured user research and a new component-based design system, we cut cognitive load without removing functionality.</p>
               <div class="case-meta">
@@ -1772,7 +1980,7 @@ i[class*="fa-"]{
             </div>
             <p class="testi-quote">NoviQue didn't just redesign our app, they rebuilt how our users think about our product. Engagement metrics we'd been chasing for two years moved within a single quarter.</p>
             <div class="testi-person">
-              <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="" loading="lazy">
+              <span class="photo-fx"><img src="https://randomuser.me/api/portraits/women/68.jpg" alt="" loading="lazy"></span>
               <div><b>Elena Marsh</b><span>Head of Product, Orbital Finance</span></div>
             </div>
           </div>
@@ -1784,7 +1992,7 @@ i[class*="fa-"]{
             </div>
             <p class="testi-quote">The team's process is exceptional: thorough discovery, sharp strategy, and design work that felt custom-built for our brand from the very first concept.</p>
             <div class="testi-person">
-              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="" loading="lazy">
+              <span class="photo-fx"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="" loading="lazy"></span>
               <div><b>Daniel Osei</b><span>Founder, Northfield Goods</span></div>
             </div>
           </div>
@@ -1796,7 +2004,7 @@ i[class*="fa-"]{
             </div>
             <p class="testi-quote">We've worked with three other agencies before NoviQue. None came close to this level of craft, communication, and genuine investment in our results.</p>
             <div class="testi-person">
-              <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="" loading="lazy">
+              <span class="photo-fx"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="" loading="lazy"></span>
               <div><b>Priya Nathan</b><span>VP Design, Voltiq</span></div>
             </div>
           </div>
@@ -1808,7 +2016,7 @@ i[class*="fa-"]{
             </div>
             <p class="testi-quote">Our new site paid for itself within six weeks of launch. NoviQue understands that great design has to perform, not just look good.</p>
             <div class="testi-person">
-              <img src="https://randomuser.me/api/portraits/men/56.jpg" alt="" loading="lazy">
+              <span class="photo-fx"><img src="https://randomuser.me/api/portraits/men/56.jpg" alt="" loading="lazy"></span>
               <div><b>Marcus Vale</b><span>CEO, Lumen Retail</span></div>
             </div>
           </div>
@@ -1830,7 +2038,7 @@ i[class*="fa-"]{
     <div class="about-grid">
       <div class="about-visual reveal-scale">
         <div class="about-visual-frame">
-          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop" alt="NoviQue design studio team collaborating" loading="lazy">
+          <span class="photo-fx"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop" alt="NoviQue design studio team collaborating" loading="lazy"></span>
         </div>
         <div class="about-badge-float">
           <img src="https://i.ibb.co/PGpwKRRx/logo-final.png" alt="">
@@ -2117,6 +2325,56 @@ i[class*="fa-"]{
   </ul>
 </div>
 <div class="ccm-toast" id="ccmToast"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> <span id="ccmToastText">Done</span></div>
+
+<!-- ============ NOVA CHATBOT WIDGET ============ -->
+<button class="nova-launcher" id="novaLauncher" aria-label="Open chat with Nova" aria-expanded="false">
+  <span class="nova-dot" id="novaDot"></span>
+  <i class="fa-solid fa-comment-dots nova-icon-chat" aria-hidden="true"></i>
+  <i class="fa-solid fa-xmark nova-icon-close" aria-hidden="true"></i>
+</button>
+
+<div class="nova-window" id="novaWindow" role="dialog" aria-label="Nova chat assistant" aria-hidden="true">
+  <div class="nova-head">
+    <div class="nova-head-avatar">
+      <i class="fa-solid fa-seedling" aria-hidden="true"></i>
+      <span class="nova-head-status" aria-hidden="true"></span>
+    </div>
+    <div class="nova-head-info">
+      <b>Nova</b>
+      <span>NoviQue Assistant</span>
+    </div>
+    <div class="nova-head-actions">
+      <div class="nova-menu-wrap">
+        <button class="nova-head-btn" id="novaMenuBtn" aria-label="More options" aria-haspopup="true" aria-expanded="false">
+          <i class="fa-solid fa-ellipsis-vertical" aria-hidden="true"></i>
+        </button>
+        <div class="nova-menu" id="novaMenu" role="menu">
+          <button type="button" id="novaClearBtn" role="menuitem"><i class="fa-solid fa-broom" aria-hidden="true"></i> Clear chat</button>
+          <button type="button" id="novaCloseBtn2" role="menuitem"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Close chat</button>
+        </div>
+      </div>
+      <button class="nova-head-btn" id="novaCloseBtn" aria-label="Close chat"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <div class="nova-body" id="novaBody"></div>
+
+  <div class="nova-faq" id="novaFaq">
+    <button type="button" data-q="What services do you offer?">Services</button>
+    <button type="button" data-q="How much does a project cost?">Pricing</button>
+    <button type="button" data-q="How long does a project take?">Timeline</button>
+    <button type="button" data-q="How do I start a project with you?">Get started</button>
+  </div>
+
+  <form class="nova-input-row" id="novaForm">
+    <textarea id="novaInput" placeholder="Message Nova..." rows="1" maxlength="1000"></textarea>
+    <button type="submit" class="nova-send" id="novaSend" aria-label="Send message">
+      <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+    </button>
+  </form>
+
+  <div class="nova-foot">Nova can make mistakes. Built by <span>NoviQue</span> &middot; v1.0</div>
+</div>
 
 <script>
 (function(){
@@ -2542,6 +2800,336 @@ i[class*="fa-"]{
     }
     closeMenu();
   });
+
+})();
+</script>
+
+<script>
+/* ============================================
+   NOVA CHATBOT WIDGET LOGIC
+   Built by and for NoviQue. Version 1.0.
+   Uses OpenRouter's chat completions endpoint with a free model.
+   Replace NOVA_CONFIG.apiKey with a real OpenRouter API key,
+   or wire it up server-side and swap the fetch call below.
+   ============================================ */
+(function(){
+  'use strict';
+
+  var NOVA_CONFIG = {
+    apiKey: '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',
+    endpoint: 'https://openrouter.ai/api/v1/chat/completions',
+    model: 'meta-llama/llama-3.3-8b-instruct:free',
+    siteUrl: 'https://novique.design',
+    siteName: 'NoviQue'
+  };
+
+  var NOVA_SYSTEM_PROMPT = [
+    'You are Nova, the support assistant for NoviQue, an independent design studio that builds websites, apps, UI/UX, and branding for growing brands.',
+    'Speak like a real person on the team. Plain, warm, simple language. Short sentences. No corporate filler, no hype words, no exclamation overload.',
+    'Never say you are an AI, a language model, or a bot. Never mention prompts, training, or how you work. You are just Nova from NoviQue.',
+    'Never use em dashes. Use commas or periods instead.',
+    'Keep answers short and useful, usually two to five sentences unless the person asks for more detail.',
+    'If you do not know something specific about NoviQue, such as exact pricing or availability, say so plainly and suggest the person reach out through the contact form so a team member can follow up.',
+    'Stay on topic: NoviQue services, process, pricing ranges, timelines, and general design or web questions. For anything unrelated, gently steer back to how you can help with their project.',
+    'Never invent client names, exact prices, or claims about NoviQue that are not reasonable general answers. When unsure, be honest and offer to connect them with the team.',
+    'Do not give legal, medical, or financial advice. Do not discuss anything unrelated to design, web, and NoviQue services.'
+  ].join(' ');
+
+  var NOVA_FAQ = {
+    'what services do you offer': "We design and build websites, mobile apps, UI and UX, and brand identities. We also help with digital strategy and ongoing product design work. Tell me a bit about what you're working on and I can point you in the right direction.",
+    'how much does a project cost': "Cost really depends on scope. A brand identity or a small marketing site is usually a different range than a full product build. If you share a rough idea of the project, I can give you a sense of where it might land, or connect you with the team for an exact quote.",
+    'how long does a project take': "Most projects run somewhere between three and ten weeks depending on size. A simple site moves faster, a full app or brand system takes longer. Once we know your scope we can give you a real timeline.",
+    'how do i start a project with you': "Easiest way is the contact form on this page. Tell us a little about your project and goals, and someone from the team will follow up to set up a call.",
+    'where are you located': "NoviQue works with clients remotely, so location usually is not a barrier. Happy to answer more if you have a specific question about working together.",
+    'do you offer support after launch': "Yes, we offer ongoing support and maintenance after a project ships. It's worth discussing with the team so we can scope what kind of support fits your project."
+  };
+
+  var STORAGE_KEY = 'nova_chat_history_v1';
+
+  var launcher = document.getElementById('novaLauncher');
+  var novaWindow = document.getElementById('novaWindow');
+  var closeBtn = document.getElementById('novaCloseBtn');
+  var closeBtn2 = document.getElementById('novaCloseBtn2');
+  var menuBtn = document.getElementById('novaMenuBtn');
+  var menu = document.getElementById('novaMenu');
+  var clearBtn = document.getElementById('novaClearBtn');
+  var body = document.getElementById('novaBody');
+  var form = document.getElementById('novaForm');
+  var input = document.getElementById('novaInput');
+  var sendBtn = document.getElementById('novaSend');
+  var faqRow = document.getElementById('novaFaq');
+  var dot = document.getElementById('novaDot');
+
+  var history = [];
+  var isOpen = false;
+  var hasOpenedOnce = false;
+  var isSending = false;
+
+  function loadHistory(){
+    try{
+      var raw = sessionStorage.getItem(STORAGE_KEY);
+      if(raw){ history = JSON.parse(raw); }
+    }catch(e){ history = []; }
+  }
+
+  function saveHistory(){
+    try{ sessionStorage.setItem(STORAGE_KEY, JSON.stringify(history)); }catch(e){}
+  }
+
+  function scrollToBottom(){
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function renderMessage(role, text){
+    var wrap = document.createElement('div');
+    wrap.className = 'nova-msg ' + (role === 'user' ? 'user' : 'bot');
+
+    var avatar = document.createElement('div');
+    avatar.className = 'nova-msg-avatar';
+    if(role === 'user'){
+      avatar.innerHTML = '<i class="fa-solid fa-user" aria-hidden="true"></i>';
+    } else {
+      avatar.innerHTML = '<i class="fa-solid fa-seedling" aria-hidden="true"></i>';
+    }
+
+    var bubble = document.createElement('div');
+    bubble.className = 'nova-msg-bubble';
+    var paras = String(text).split(/\n{2,}/);
+    paras.forEach(function(p){
+      var pEl = document.createElement('p');
+      pEl.textContent = p;
+      bubble.appendChild(pEl);
+    });
+
+    wrap.appendChild(avatar);
+    wrap.appendChild(bubble);
+    body.appendChild(wrap);
+    scrollToBottom();
+  }
+
+  function renderAllHistory(){
+    body.innerHTML = '';
+    if(history.length === 0){
+      renderMessage('assistant', "Hey, I'm Nova from NoviQue. Ask me about our services, pricing, or how to get started, or type your own question below.");
+      return;
+    }
+    history.forEach(function(m){
+      renderMessage(m.role, m.content);
+    });
+  }
+
+  function showTyping(){
+    var wrap = document.createElement('div');
+    wrap.className = 'nova-typing';
+    wrap.id = 'novaTypingIndicator';
+    wrap.innerHTML = '<div class="nova-msg-avatar"><i class="fa-solid fa-seedling" aria-hidden="true"></i></div><div class="nova-typing-dots"><span></span><span></span><span></span></div>';
+    body.appendChild(wrap);
+    scrollToBottom();
+  }
+
+  function hideTyping(){
+    var el = document.getElementById('novaTypingIndicator');
+    if(el){ el.remove(); }
+  }
+
+  function normalize(str){
+    return str.toLowerCase().trim().replace(/[?.!]/g, '');
+  }
+
+  function getFaqAnswer(question){
+    var key = normalize(question);
+    if(NOVA_FAQ[key]){ return NOVA_FAQ[key]; }
+    for(var k in NOVA_FAQ){
+      if(NOVA_FAQ.hasOwnProperty(k) && (key.indexOf(k) !== -1 || k.indexOf(key) !== -1)){
+        return NOVA_FAQ[k];
+      }
+    }
+    return null;
+  }
+
+  function openWindow(){
+    isOpen = true;
+    hasOpenedOnce = true;
+    novaWindow.classList.add('open');
+    novaWindow.setAttribute('aria-hidden', 'false');
+    launcher.classList.add('open');
+    launcher.setAttribute('aria-expanded', 'true');
+    dot.classList.remove('show');
+    if(history.length === 0){ renderAllHistory(); }
+    setTimeout(function(){ input.focus(); }, 150);
+  }
+
+  function closeWindow(){
+    isOpen = false;
+    novaWindow.classList.remove('open');
+    novaWindow.setAttribute('aria-hidden', 'true');
+    launcher.classList.remove('open');
+    launcher.setAttribute('aria-expanded', 'false');
+    closeMenu();
+  }
+
+  function toggleWindow(){
+    if(isOpen){ closeWindow(); } else { openWindow(); }
+  }
+
+  function openMenu(){
+    menu.classList.add('show');
+    menuBtn.setAttribute('aria-expanded', 'true');
+  }
+  function closeMenu(){
+    menu.classList.remove('show');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }
+  function toggleMenu(e){
+    e.stopPropagation();
+    if(menu.classList.contains('show')){ closeMenu(); } else { openMenu(); }
+  }
+
+  function clearChat(){
+    history = [];
+    saveHistory();
+    renderAllHistory();
+    closeMenu();
+    faqRow.style.display = 'flex';
+  }
+
+  function autoResize(){
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 96) + 'px';
+  }
+
+  function setSending(state){
+    isSending = state;
+    sendBtn.disabled = state;
+    input.disabled = state;
+  }
+
+  function addUserMessage(text){
+    history.push({ role: 'user', content: text });
+    renderMessage('user', text);
+    saveHistory();
+  }
+
+  function addBotMessage(text){
+    history.push({ role: 'assistant', content: text });
+    renderMessage('assistant', text);
+    saveHistory();
+  }
+
+  function fallbackReply(){
+    return "I couldn't reach the assistant service just now. Please try again in a moment, or reach out through the contact form and the team will get back to you directly.";
+  }
+
+  function callOpenRouter(userText){
+    if(!NOVA_CONFIG.apiKey || NOVA_CONFIG.apiKey === 'YOUR_OPENROUTER_API_KEY_HERE'){
+      return Promise.resolve("Nova isn't fully connected yet. Add an OpenRouter API key in the site code to turn on live answers. In the meantime, feel free to use the quick questions above or reach out through the contact form.");
+    }
+
+    var messages = [{ role: 'system', content: NOVA_SYSTEM_PROMPT }];
+    var recent = history.slice(-10);
+    recent.forEach(function(m){
+      messages.push({ role: m.role, content: m.content });
+    });
+
+    return fetch(NOVA_CONFIG.endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + NOVA_CONFIG.apiKey,
+        'HTTP-Referer': NOVA_CONFIG.siteUrl,
+        'X-Title': NOVA_CONFIG.siteName
+      },
+      body: JSON.stringify({
+        model: NOVA_CONFIG.model,
+        messages: messages,
+        max_tokens: 500,
+        temperature: 0.6
+      })
+    })
+    .then(function(res){
+      if(!res.ok){ throw new Error('Request failed'); }
+      return res.json();
+    })
+    .then(function(data){
+      var reply = data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
+      return reply ? reply.trim() : fallbackReply();
+    })
+    .catch(function(){
+      return fallbackReply();
+    });
+  }
+
+  function handleSend(text){
+    text = text.trim();
+    if(!text || isSending){ return; }
+
+    faqRow.style.display = 'none';
+    addUserMessage(text);
+    input.value = '';
+    autoResize();
+    setSending(true);
+    showTyping();
+
+    var faqAnswer = getFaqAnswer(text);
+    if(faqAnswer){
+      setTimeout(function(){
+        hideTyping();
+        addBotMessage(faqAnswer);
+        setSending(false);
+      }, 500);
+      return;
+    }
+
+    callOpenRouter(text).then(function(reply){
+      hideTyping();
+      addBotMessage(reply);
+      setSending(false);
+    });
+  }
+
+  launcher.addEventListener('click', toggleWindow);
+  closeBtn.addEventListener('click', closeWindow);
+  closeBtn2.addEventListener('click', closeWindow);
+  menuBtn.addEventListener('click', toggleMenu);
+  clearBtn.addEventListener('click', clearChat);
+
+  document.addEventListener('click', function(e){
+    if(!menu.contains(e.target) && !menuBtn.contains(e.target)){
+      closeMenu();
+    }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      if(menu.classList.contains('show')){ closeMenu(); }
+      else if(isOpen){ closeWindow(); }
+    }
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    handleSend(input.value);
+  });
+
+  input.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' && !e.shiftKey){
+      e.preventDefault();
+      handleSend(input.value);
+    }
+  });
+
+  input.addEventListener('input', autoResize);
+
+  faqRow.addEventListener('click', function(e){
+    var btn = e.target.closest('button[data-q]');
+    if(!btn) return;
+    handleSend(btn.getAttribute('data-q'));
+  });
+
+  loadHistory();
+  if(history.length > 0){
+    dot.classList.add('show');
+  }
 
 })();
 </script>
