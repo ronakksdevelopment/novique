@@ -2815,10 +2815,15 @@ i[class*="fa-"]{
 (function(){
   'use strict';
 
-  var NOVA_CONFIG = {
-    apiKey: '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',
+var NOVA_CONFIG = {
+    apiKey: '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',
     endpoint: 'https://openrouter.ai/api/v1/chat/completions',
-    model: 'openrouter/free',
+    model: 'openrouter/auto',
+    modelFallbacks: [
+      'meta-llama/llama-3.3-70b-instruct:free',
+      'google/gemma-2-9b-it:free',
+      'mistralai/mistral-7b-instruct:free'
+    ],
     siteUrl: 'https://ronakksdevelopment.github.io/novique/',
     siteName: 'NoviQue'
   };
@@ -3021,7 +3026,7 @@ i[class*="fa-"]{
   }
 
   function callOpenRouter(userText){
-    if(!NOVA_CONFIG.apiKey || NOVA_CONFIG.apiKey === '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'){
+    if(!NOVA_CONFIG.apiKey || NOVA_CONFIG.apiKey === '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'){
       return Promise.resolve("Nova isn't fully connected yet. Add an OpenRouter API key in the site code to turn on live answers. In the meantime, feel free to use the quick questions above or reach out through the contact form.");
     }
 
