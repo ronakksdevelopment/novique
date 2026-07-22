@@ -3097,13 +3097,12 @@ i[class*="fa-"]{
 var NOVA_CONFIG = {
     apiKey: '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',
     endpoint: 'https://openrouter.ai/api/v1/chat/completions',
-    model: 'openrouter/auto',
-    modelFallbacks: [
-      'qwen/qwen3-coder:free',
-      'deepseek/deepseek-r1:free',
-      'meta-llama/llama-3.3-70b-instruct:free',
-      'google/gemma-3-12b-it:free'
-    ],
+model: 'deepseek/deepseek-r1:free',
+modelFallbacks: [
+  'qwen/qwen3-coder:free',
+  'meta-llama/llama-3.3-70b-instruct:free',
+  'google/gemma-3-12b-it:free'
+],
     siteUrl: 'https://ronakksdevelopment.github.io/novique/',
     siteName: 'NoviQue'
   };
@@ -3539,9 +3538,34 @@ var NOVA_CONFIG = {
         max_tokens: 500,
         temperature: 0.6
       })
-    }).then(function(res){
-      if(!res.ok){ throw new Error('Request failed with status ' + res.status); }
-      return res.json();
+    }).then(async function(res){
+
+    var data = await res.json();
+
+    if(!res.ok){
+
+        console.error("OpenRouter Error:", data);
+
+        throw new Error(
+            data.error?.message ||
+            data.message ||
+            ("HTTP " + res.status)
+        );
+    }
+
+    var reply =
+        data &&
+        data.choices &&
+        data.choices[0] &&
+        data.choices[0].message &&
+        data.choices[0].message.content;
+
+    if(!reply){
+        throw new Error("Empty response");
+    }
+
+    return reply.trim();
+})
     }).then(function(data){
       var reply = data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
       if(!reply){ throw new Error('Empty response'); }
@@ -3565,16 +3589,23 @@ var NOVA_CONFIG = {
     var modelsToTry = [NOVA_CONFIG.model].concat(NOVA_CONFIG.modelFallbacks || []);
     var attempt = 0;
 
-    function tryNext(){
-      if(attempt >= modelsToTry.length){
-        return fallbackReply();
-      }
-      var model = modelsToTry[attempt];
-      attempt += 1;
-      return requestChatCompletion(model, messages).catch(function(){
-        return tryNext();
-      });
+function tryNext(){
+
+    if(attempt >= modelsToTry.length){
+        throw new Error("All models failed");
     }
+
+    var model = modelsToTry[attempt++];
+
+    return requestChatCompletion(model, messages)
+        .catch(function(err){
+
+            console.warn("Model failed:", model, err);
+
+            return tryNext();
+        });
+
+}
 
     return tryNext();
   }
@@ -3600,11 +3631,22 @@ var NOVA_CONFIG = {
       return;
     }
 
-    callOpenRouter(text).then(function(reply){
-      hideTyping();
-      addBotMessage(reply, { typewriter: true });
-      setSending(false);
-    });
+callOpenRouter(text)
+.then(function(reply){
+    hideTyping();
+    addBotMessage(reply, { typewriter:true });
+})
+.catch(function(err){
+    hideTyping();
+    addBotMessage(
+        "Sorry, I'm temporarily unavailable.\n\n" +
+        err.message,
+        { typewriter:true }
+    );
+})
+.finally(function(){
+    setSending(false);
+});
   }
 
   launcher.addEventListener('click', toggleWindow);
