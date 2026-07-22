@@ -3510,17 +3510,19 @@ var NOVA_CONFIG = {
     saveHistory();
   }
 
-  function fallbackReply(){
+  function fallbackReply(reason){
+    if(reason === 'not-configured'){
+      return "Nova's live chat isn't connected yet, so I can only answer the quick questions above for now. For anything else, the contact form is the fastest way to reach the team.";
+    }
     return "I couldn't reach the assistant service just now. Please try again in a moment, or reach out through the contact form and the team will get back to you directly.";
   }
 
-  function callOpenRouter(userText){
-    var messages = [{ role: 'system', content: NOVA_SYSTEM_PROMPT }];
-    var recent = history.slice(-10);
-    recent.forEach(function(m){
-      messages.push({ role: m.role, content: m.content });
-    });
+  function isApiKeyConfigured(){
+    var key = NOVA_CONFIG.apiKey;
+    return !!key && key.indexOf('YOUR_') !== 0 && key.trim() !== '';
+  }
 
+  function requestChatCompletion(model, messages){
     return fetch(NOVA_CONFIG.endpoint, {
       method: 'POST',
       headers: {
@@ -3530,23 +3532,49 @@ var NOVA_CONFIG = {
         'X-Title': NOVA_CONFIG.siteName
       },
       body: JSON.stringify({
-        model: NOVA_CONFIG.model,
+        model: model,
         messages: messages,
         max_tokens: 500,
         temperature: 0.6
       })
-    })
-    .then(function(res){
-      if(!res.ok){ throw new Error('Request failed'); }
+    }).then(function(res){
+      if(!res.ok){ throw new Error('Request failed with status ' + res.status); }
       return res.json();
-    })
-    .then(function(data){
+    }).then(function(data){
       var reply = data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
-      return reply ? reply.trim() : fallbackReply();
-    })
-    .catch(function(){
-      return fallbackReply();
+      if(!reply){ throw new Error('Empty response'); }
+      return reply.trim();
     });
+  }
+
+  function callOpenRouter(userText){
+    if(!isApiKeyConfigured()){
+      return Promise.resolve(fallbackReply('not-configured'));
+    }
+
+    var messages = [{ role: 'system', content: NOVA_SYSTEM_PROMPT }];
+    var recent = history.slice(-10);
+    recent.forEach(function(m){
+      messages.push({ role: m.role, content: m.content });
+    });
+
+    // Try the primary model first, then walk the configured fallbacks in order.
+    // Only surface the generic "couldn't reach" message once every option has failed.
+    var modelsToTry = [NOVA_CONFIG.model].concat(NOVA_CONFIG.modelFallbacks || []);
+    var attempt = 0;
+
+    function tryNext(){
+      if(attempt >= modelsToTry.length){
+        return fallbackReply();
+      }
+      var model = modelsToTry[attempt];
+      attempt += 1;
+      return requestChatCompletion(model, messages).catch(function(){
+        return tryNext();
+      });
+    }
+
+    return tryNext();
   }
 
   function handleSend(text){
