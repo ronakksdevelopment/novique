@@ -3095,10 +3095,11 @@ i[class*="fa-"]{
   'use strict';
 
 var NOVA_CONFIG = {
-    apiKey: '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',
+    apiKey: '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', // <-- paste your ROTATED OpenRouter key here
     endpoint: 'https://openrouter.ai/api/v1/chat/completions',
     model: 'openrouter/free',
     modelFallbacks: [
+      'tencent/hy3:free',
       'poolside/laguna-xs-2.1:free',
       'poolside/laguna-m.1:free',
       'cohere/north-mini-code:free',
