@@ -291,6 +291,40 @@ p{ color: var(--ink-dim); font-weight: 700; }
 .fa-spin{ --fa-animation-duration: 3s; }
 .fa-fade{ --fa-animation-duration: 2.6s; --fa-fade-opacity: 0.4; }
 
+/* Extra "doodle flourish" wiggle used on hover for interactive icons site-wide
+   (nav links, buttons, service icons, chatbot icons). Separate from the FA
+   always-on animations above, this only plays on :hover / .icon-flourish-active
+   so it reads as a deliberate reaction rather than constant motion. */
+@keyframes iconFlourish{
+  0%{ transform: rotate(0deg) scale(1); }
+  20%{ transform: rotate(-14deg) scale(1.12); }
+  45%{ transform: rotate(10deg) scale(1.08); }
+  70%{ transform: rotate(-6deg) scale(1.1); }
+  100%{ transform: rotate(0deg) scale(1); }
+}
+.icon-flourish{ display:inline-block; transform-origin:50% 55%; }
+a:hover > .icon-flourish,
+button:hover > .icon-flourish,
+.icon-flourish-active{
+  animation: iconFlourish .55s var(--ease-soft) both;
+}
+/* Applies the same flourish to every Font Awesome icon that lives directly
+   inside a link, button, or icon-badge wrapper, so nav items, CTAs, service
+   icons and stat icons all react on hover without needing markup changes. */
+a:hover > i.fa-solid, a:hover > i.fa-regular, a:hover > i.fa-brands,
+button:hover > i.fa-solid, button:hover > i.fa-regular, button:hover > i.fa-brands,
+.service-icon:hover > i, .card-stat .icon:hover > i,
+.about-value:hover > i, .contact-detail:hover > i{
+  animation: iconFlourish .55s var(--ease-soft) both;
+}
+@media (prefers-reduced-motion: reduce){
+  .icon-flourish, a:hover > .icon-flourish, button:hover > .icon-flourish,
+  a:hover > i.fa-solid, a:hover > i.fa-regular, a:hover > i.fa-brands,
+  button:hover > i.fa-solid, button:hover > i.fa-regular, button:hover > i.fa-brands,
+  .service-icon:hover > i, .card-stat .icon:hover > i,
+  .about-value:hover > i, .contact-detail:hover > i{ animation:none !important; }
+}
+
 /* Buttons */
 .btn{
   position: relative;
@@ -326,8 +360,10 @@ p{ color: var(--ink-dim); font-weight: 700; }
 }
 .btn-sm{ padding: 0.7rem 1.35rem; font-size: 0.85rem; }
 .btn-block{ width: 100%; }
-.btn .fa-solid, .btn .fa-regular{ font-size: 0.85em; transition: transform .3s var(--ease); }
+.btn .fa-solid, .btn .fa-regular{ font-size: 0.85em; transition: transform .3s cubic-bezier(.34,1.56,.64,1); }
 .btn:hover .fa-arrow-right{ transform: translateX(4px); }
+.btn:hover .fa-arrow-up-right-from-square{ transform: translate(2px,-2px) scale(1.08); }
+.btn:active{ transform: scale(0.97); }
 
 /* Loader */
 #loader{
@@ -382,7 +418,7 @@ p{ color: var(--ink-dim); font-weight: 700; }
 .nav-logo{ display:flex; align-items:center; gap:0.65rem; }
 .nav-logo-mark{
   height: 42px; width: 42px; border-radius:11px;
-  transition: transform .3s var(--ease);
+  transition: transform .4s cubic-bezier(.34,1.56,.64,1);
   flex-shrink:0;
 }
 .nav-logo-text{
@@ -418,13 +454,15 @@ p{ color: var(--ink-dim); font-weight: 700; }
 .nav-toggle{
   display:none; align-items:center; justify-content:center;
   position:relative; width:26px; height:26px; z-index:501;
+  transition: transform .15s var(--ease-soft);
 }
+.nav-toggle:active{ transform: scale(0.88); }
 .nav-toggle-icon{
   position:absolute; top:50%; left:50%;
   font-size:1.3rem; color: var(--white);
   transform: translate(-50%,-50%) rotate(0deg) scale(1);
   opacity:1;
-  transition: transform .35s var(--ease), opacity .25s var(--ease);
+  transition: transform .4s cubic-bezier(.34,1.56,.64,1), opacity .25s var(--ease);
 }
 .nav-toggle .icon-close{
   opacity:0;
@@ -722,7 +760,8 @@ p{ color: var(--ink-dim); font-weight: 700; }
   font-size:0.85rem; color: var(--ink-dim); font-weight:700;
   transition: all .3s var(--ease); white-space:nowrap;
 }
-.filter-btn:hover{ color: var(--white); border-color: var(--lime); }
+.filter-btn:hover{ color: var(--white); border-color: var(--lime); transform: translateY(-2px); }
+.filter-btn:active{ transform: scale(0.96); }
 .filter-btn.active{
   background: var(--lime); color:#14150C; border-color: var(--lime);
 }
@@ -787,9 +826,10 @@ p{ color: var(--ink-dim); font-weight: 700; }
   width:38px; height:38px; border-radius:50%;
   background: var(--lime); color:#14150C; display:flex; align-items:center; justify-content:center;
   opacity:0; transform: scale(0.7) translateY(6px);
-  transition: all .35s var(--ease);
+  transition: opacity .3s var(--ease), transform .35s cubic-bezier(.34,1.56,.64,1), background .2s ease;
   right:1rem; bottom:1rem;
 }
+.project-view-btn:hover{ background:#C7FF33; transform: scale(1.1) translateY(0) !important; }
 .project-card:hover .project-view-btn{ opacity:1; transform:scale(1) translateY(0); }
 
 @media (max-width:1080px){ .portfolio-grid{ grid-template-columns: repeat(2,1fr); } }
@@ -1241,19 +1281,50 @@ i[class*="fa-"]{
   display:flex; align-items:center; justify-content:center;
   border:none; cursor:pointer;
   box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-  transition: transform .25s var(--ease), background .2s ease;
+  transition: transform .25s var(--ease), background .2s ease, box-shadow .25s var(--ease);
+  animation: novaLauncherBreathe 3.2s ease-in-out infinite;
 }
-.nova-launcher:hover{ transform: translateY(-4px) scale(1.05); background:#C7FF33; }
-.nova-launcher i{ font-size:1.35rem; }
+.nova-launcher::before{
+  content:''; position:absolute; inset:-6px; border-radius:50%;
+  border: 1.5px solid var(--lime); opacity:0;
+  animation: novaLauncherRipple 2.8s ease-out infinite;
+  pointer-events:none;
+}
+.nova-launcher.open::before{ display:none; }
+.nova-launcher:hover{ transform: translateY(-4px) scale(1.05) rotate(-6deg); background:#C7FF33; box-shadow: 0 12px 32px rgba(0,0,0,0.5); animation-play-state: paused; }
+.nova-launcher:active{ transform: translateY(-1px) scale(0.94) rotate(2deg); }
+.nova-launcher i{ font-size:1.35rem; transition: transform .4s var(--ease), opacity .25s var(--ease); }
 .nova-launcher .nova-icon-close{ display:none; }
 .nova-launcher.open .nova-icon-chat{ display:none; }
-.nova-launcher.open .nova-icon-close{ display:block; }
+.nova-launcher.open .nova-icon-close{ display:block; animation: novaIconSpinIn .4s var(--ease-soft); }
+.nova-launcher:not(.open) .nova-icon-chat{ animation: novaIconSpinIn .4s var(--ease-soft); }
+@keyframes novaLauncherBreathe{
+  0%,100%{ box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 0 0 rgba(192,255,62,0.0); }
+  50%{ box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 0 8px rgba(192,255,62,0.08); }
+}
+@keyframes novaLauncherRipple{
+  0%{ transform: scale(1); opacity:0.5; }
+  100%{ transform: scale(1.35); opacity:0; }
+}
+@keyframes novaIconSpinIn{
+  0%{ transform: rotate(-90deg) scale(0.5); opacity:0; }
+  100%{ transform: rotate(0deg) scale(1); opacity:1; }
+}
 .nova-launcher .nova-dot{
   position:absolute; top:4px; right:4px; width:12px; height:12px;
   border-radius:50%; background:#FF5C4D; border:2px solid var(--bg);
   display:none;
 }
-.nova-launcher .nova-dot.show{ display:block; }
+.nova-launcher .nova-dot.show{ display:block; animation: novaDotPop .35s var(--ease-soft), novaDotGlow 1.6s ease-in-out infinite .35s; }
+@keyframes novaDotPop{
+  0%{ transform: scale(0); }
+  60%{ transform: scale(1.3); }
+  100%{ transform: scale(1); }
+}
+@keyframes novaDotGlow{
+  0%,100%{ box-shadow: 0 0 0 0 rgba(255,92,77,0.5); }
+  50%{ box-shadow: 0 0 0 4px rgba(255,92,77,0); }
+}
 @media (max-width:640px){
   .nova-launcher{ right:1.1rem; bottom:1.1rem; width:52px; height:52px; }
 }
@@ -1268,11 +1339,11 @@ i[class*="fa-"]{
   display:flex; flex-direction:column;
   overflow:hidden;
   box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-  opacity:0; visibility:hidden; transform: translateY(16px) scale(0.98);
+  opacity:0; visibility:hidden; transform: translateY(22px) scale(0.9) rotate(-1.2deg);
   transform-origin: bottom right;
-  transition: opacity .22s var(--ease), transform .22s var(--ease), visibility .22s;
+  transition: opacity .32s var(--ease-soft), transform .45s cubic-bezier(.2,1.4,.4,1), visibility .32s;
 }
-.nova-window.open{ opacity:1; visibility:visible; transform: translateY(0) scale(1); }
+.nova-window.open{ opacity:1; visibility:visible; transform: translateY(0) scale(1) rotate(0deg); }
 @media (max-width:640px){
   .nova-window{
     right:0.6rem; left:0.6rem; bottom:0.6rem;
@@ -1291,10 +1362,21 @@ i[class*="fa-"]{
   background: var(--dark-green); display:flex; align-items:center; justify-content:center;
   color: var(--lime); flex-shrink:0; position:relative;
 }
-.nova-head-avatar i{ font-size:1.05rem; }
+.nova-head-avatar i{ font-size:1.05rem; animation: novaAvatarSway 3.5s ease-in-out infinite; transition: transform .3s var(--ease-soft); }
+.nova-head-avatar:hover i{ animation-play-state:paused; transform: scale(1.25) rotate(-10deg); }
+@keyframes novaAvatarSway{
+  0%,100%{ transform: rotate(0deg); }
+  25%{ transform: rotate(-8deg); }
+  75%{ transform: rotate(8deg); }
+}
 .nova-head-status{
   position:absolute; bottom:-1px; right:-1px; width:11px; height:11px;
   border-radius:50%; background:#5FD068; border:2px solid #14150C;
+  animation: novaStatusPulse 2s ease-in-out infinite;
+}
+@keyframes novaStatusPulse{
+  0%,100%{ box-shadow: 0 0 0 0 rgba(95,208,104,0.55); }
+  50%{ box-shadow: 0 0 0 3px rgba(95,208,104,0); }
 }
 .nova-head-info{ flex:1; min-width:0; }
 .nova-head-info b{ display:block; color:var(--white); font-family:var(--font-display); font-size:0.98rem; font-weight:400; }
@@ -1305,28 +1387,33 @@ i[class*="fa-"]{
   width:32px; height:32px; border-radius:9px; border:none;
   background:transparent; color: var(--ink-dim); cursor:pointer;
   display:flex; align-items:center; justify-content:center;
-  transition: background .15s ease, color .15s ease;
+  transition: background .15s ease, color .15s ease, transform .2s var(--ease-soft);
 }
-.nova-head-btn:hover{ background: var(--dark-green); color: var(--lime); }
-.nova-head-btn i{ font-size:0.92rem; }
+.nova-head-btn:hover{ background: var(--dark-green); color: var(--lime); transform: scale(1.08); }
+.nova-head-btn:active{ transform: scale(0.92); }
+.nova-head-btn i{ font-size:0.92rem; transition: transform .3s var(--ease-soft); }
+.nova-head-btn:hover i{ transform: rotate(90deg); }
+#novaMenuBtn:hover i{ transform: rotate(90deg) scale(1.1); }
 
 .nova-menu{
   position:absolute; top:calc(100% + 6px); right:0; z-index:5;
   min-width:170px; background:#0F0F0E; border:1px solid var(--border-lime);
   border-radius:12px; padding:0.4rem;
-  opacity:0; visibility:hidden; transform: translateY(-6px);
-  transition: opacity .15s ease, transform .15s ease, visibility .15s;
+  opacity:0; visibility:hidden; transform: translateY(-6px) scale(0.96);
+  transform-origin: top right;
+  transition: opacity .18s var(--ease-soft), transform .22s cubic-bezier(.34,1.56,.64,1), visibility .18s;
 }
-.nova-menu.show{ opacity:1; visibility:visible; transform:translateY(0); }
+.nova-menu.show{ opacity:1; visibility:visible; transform:translateY(0) scale(1); }
 .nova-menu button{
   display:flex; align-items:center; gap:0.6rem; width:100%;
   padding:0.55rem 0.65rem; border-radius:8px; border:none;
   background:transparent; color:var(--ink-dim); font-size:0.82rem;
   font-family:var(--font-body); font-weight:700; cursor:pointer; text-align:left;
+  transition: background .15s ease, color .15s ease, padding-left .2s var(--ease-soft);
 }
-.nova-menu button:hover{ background: var(--dark-green); color:var(--white); }
-.nova-menu button i{ width:15px; font-size:0.8em; color:var(--ink-faint); }
-.nova-menu button:hover i{ color:var(--lime); }
+.nova-menu button:hover{ background: var(--dark-green); color:var(--white); padding-left:0.85rem; }
+.nova-menu button i{ width:15px; font-size:0.8em; color:var(--ink-faint); transition: color .15s ease, transform .2s var(--ease-soft); }
+.nova-menu button:hover i{ color: var(--lime); transform: scale(1.15); }
 
 .nova-body{
   flex:1; overflow-y:auto; padding: 1rem 1.1rem;
@@ -1336,13 +1423,27 @@ i[class*="fa-"]{
 .nova-body::-webkit-scrollbar{ width:6px; }
 .nova-body::-webkit-scrollbar-thumb{ background: var(--border-lime); border-radius:99px; }
 
-.nova-msg{ display:flex; gap:0.55rem; max-width:88%; }
+.nova-msg{ display:flex; gap:0.55rem; max-width:88%; animation: novaMsgIn .35s var(--ease-soft) both; }
 .nova-msg.bot{ align-self:flex-start; }
-.nova-msg.user{ align-self:flex-end; flex-direction:row-reverse; }
+.nova-msg.user{ align-self:flex-end; flex-direction:row-reverse; animation-name: novaMsgInRight; }
+@keyframes novaMsgIn{
+  0%{ opacity:0; transform: translateY(10px) scale(0.96); }
+  100%{ opacity:1; transform: translateY(0) scale(1); }
+}
+@keyframes novaMsgInRight{
+  0%{ opacity:0; transform: translateY(10px) scale(0.96); }
+  100%{ opacity:1; transform: translateY(0) scale(1); }
+}
 .nova-msg-avatar{
   width:26px; height:26px; border-radius:50%; flex-shrink:0;
   display:flex; align-items:center; justify-content:center; font-size:0.72rem;
   background: var(--dark-green); color: var(--lime); margin-top:2px;
+  animation: novaAvatarPop .35s var(--ease-soft) both;
+}
+@keyframes novaAvatarPop{
+  0%{ transform: scale(0.5); opacity:0; }
+  60%{ transform: scale(1.15); opacity:1; }
+  100%{ transform: scale(1); }
 }
 .nova-msg.user .nova-msg-avatar{ background: var(--bg-elevated-2); color: var(--ink-dim); }
 .nova-msg-bubble{
@@ -1357,8 +1458,14 @@ i[class*="fa-"]{
 }
 .nova-msg-bubble p{ margin:0 0 0.5rem; }
 .nova-msg-bubble p:last-child{ margin-bottom:0; }
+.nova-msg-bubble p.nova-caret::after{
+  content:''; display:inline-block; width:2px; height:0.95em;
+  background: var(--lime); margin-left:2px; vertical-align:-2px;
+  animation: novaCaretBlink 0.85s steps(1) infinite;
+}
+@keyframes novaCaretBlink{ 0%,50%{ opacity:1; } 50.01%,100%{ opacity:0; } }
 
-.nova-typing{ display:flex; gap:0.55rem; align-self:flex-start; align-items:center; }
+.nova-typing{ display:flex; gap:0.55rem; align-self:flex-start; align-items:center; animation: novaMsgIn .3s var(--ease-soft) both; }
 .nova-typing-dots{
   display:flex; gap:4px; background: var(--bg-elevated-2); padding:0.65rem 0.9rem; border-radius:14px; border-bottom-left-radius:4px;
 }
@@ -1377,9 +1484,14 @@ i[class*="fa-"]{
   border:1px solid var(--border-lime); background:transparent; color: var(--ink-dim);
   font-family:var(--font-body); font-weight:700; font-size:0.76rem;
   padding:0.45rem 0.8rem; border-radius:999px; cursor:pointer;
-  transition: background .15s ease, color .15s ease, border-color .15s ease;
+  transition: background .15s ease, color .15s ease, border-color .15s ease, transform .2s var(--ease-soft);
+  animation: novaMsgIn .4s var(--ease-soft) both;
 }
-.nova-faq button:hover{ background: var(--dark-green); color:var(--white); border-color: var(--lime); }
+.nova-faq button:nth-child(1){ animation-delay: .05s; }
+.nova-faq button:nth-child(2){ animation-delay: .1s; }
+.nova-faq button:nth-child(3){ animation-delay: .15s; }
+.nova-faq button:nth-child(4){ animation-delay: .2s; }
+.nova-faq button:hover{ background: var(--dark-green); color:var(--white); border-color: var(--lime); transform: translateY(-2px); }
 
 .nova-input-row{
   display:flex; align-items:flex-end; gap:0.6rem;
@@ -1397,16 +1509,161 @@ i[class*="fa-"]{
   width:38px; height:38px; border-radius:50%; border:none; flex-shrink:0;
   background: var(--lime); color:#14150C; cursor:pointer;
   display:flex; align-items:center; justify-content:center;
-  transition: background .15s ease, transform .15s ease;
+  transition: background .15s ease, transform .15s var(--ease-soft);
 }
-.nova-send:hover{ background:#C7FF33; transform: scale(1.06); }
+.nova-send i{ transition: transform .25s var(--ease-soft); }
+.nova-send:hover{ background:#C7FF33; transform: scale(1.06) rotate(-4deg); }
+.nova-send:hover i{ transform: translateY(-2px) rotate(8deg); }
+.nova-send:active{ transform: scale(0.92) rotate(0deg); }
 .nova-send:disabled{ opacity:0.4; cursor:not-allowed; transform:none; }
+.nova-send.sending i{ animation: novaSendPulse .7s ease-in-out infinite; }
+@keyframes novaSendPulse{
+  0%,100%{ transform: scale(1); }
+  50%{ transform: scale(1.2); }
+}
 
 .nova-foot{
   text-align:center; padding:0.5rem 1rem 0.75rem; flex-shrink:0;
   font-size:0.68rem; color: var(--ink-faint); background:#14150C;
 }
 .nova-foot span{ color: var(--olive); }
+
+/* ============================================
+   NOVA CHAT HISTORY PANEL
+   Slide-over list of saved conversations, layered
+   above the chat window itself.
+   ============================================ */
+.nova-history{
+  position:absolute; inset:0; z-index:6;
+  background: var(--bg-elevated);
+  display:flex; flex-direction:column;
+  transform: translateX(100%);
+  transition: transform .32s cubic-bezier(.34,1.1,.64,1);
+}
+.nova-history.show{ transform: translateX(0); }
+.nova-history-head{
+  display:flex; align-items:center; gap:0.6rem;
+  padding: 1rem 1.1rem; background:#14150C;
+  border-bottom:1px solid var(--border-soft); flex-shrink:0;
+}
+.nova-history-head b{ font-family:var(--font-display); font-weight:400; color:var(--white); font-size:0.95rem; flex:1; }
+.nova-history-back{
+  width:32px; height:32px; border-radius:9px; border:none; background:transparent;
+  color:var(--ink-dim); display:flex; align-items:center; justify-content:center; cursor:pointer;
+  transition: background .15s ease, color .15s ease, transform .2s var(--ease-soft);
+}
+.nova-history-back:hover{ background:var(--dark-green); color:var(--lime); transform: translateX(-2px); }
+.nova-history-new{
+  border:1px solid var(--border-lime); background:transparent; color:var(--lime);
+  font-family:var(--font-body); font-weight:700; font-size:0.74rem;
+  padding:0.4rem 0.7rem; border-radius:999px; cursor:pointer; display:flex; align-items:center; gap:0.35rem;
+  transition: background .15s ease, color .15s ease, transform .2s var(--ease-soft);
+}
+.nova-history-new:hover{ background:var(--lime); color:#14150C; transform: translateY(-1px); }
+.nova-history-list{
+  flex:1; overflow-y:auto; padding:0.7rem; display:flex; flex-direction:column; gap:0.5rem;
+}
+.nova-history-list::-webkit-scrollbar{ width:6px; }
+.nova-history-list::-webkit-scrollbar-thumb{ background: var(--border-lime); border-radius:99px; }
+.nova-history-empty{
+  margin:auto; text-align:center; color:var(--ink-faint); font-size:0.82rem; padding:2rem 1rem;
+}
+.nova-history-empty i{ display:block; font-size:1.6rem; margin-bottom:0.6rem; color:var(--border-lime); }
+.nova-history-item{
+  display:flex; align-items:flex-start; gap:0.65rem;
+  padding:0.7rem 0.75rem; border-radius:12px; border:1px solid var(--border-soft);
+  background: var(--bg-elevated-2); cursor:pointer; text-align:left; width:100%;
+  animation: novaMsgIn .3s var(--ease-soft) both;
+  transition: border-color .18s ease, transform .18s var(--ease-soft), background .18s ease;
+}
+.nova-history-item:hover{ border-color: var(--lime); transform: translateX(3px); background:#2F2F2A; }
+.nova-history-item-icon{
+  width:30px; height:30px; border-radius:50%; flex-shrink:0; background: var(--dark-green); color: var(--lime);
+  display:flex; align-items:center; justify-content:center; font-size:0.78rem;
+}
+.nova-history-item-body{ flex:1; min-width:0; }
+.nova-history-item-title{ color:var(--white); font-size:0.82rem; font-weight:700; margin-bottom:0.15rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.nova-history-item-preview{ color:var(--ink-faint); font-size:0.74rem; line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.nova-history-item-meta{ color:var(--ink-faint); font-size:0.66rem; margin-top:0.35rem; display:flex; align-items:center; gap:0.3rem; }
+.nova-history-item-del{
+  flex-shrink:0; width:26px; height:26px; border-radius:8px; border:none; background:transparent;
+  color:var(--ink-faint); display:flex; align-items:center; justify-content:center; cursor:pointer;
+  transition: background .15s ease, color .15s ease, transform .2s var(--ease-soft);
+}
+.nova-history-item-del:hover{ background:#4A1E1E; color:#FF6B5C; transform: scale(1.1) rotate(-8deg); }
+
+/* ============================================
+   DOODLE CUSTOM CURSOR
+   A hand-drawn pencil tip that leads a wobbly
+   trailing ring. Desktop / fine-pointer only;
+   falls back to the system cursor on touch
+   devices and for reduced-motion users.
+   ============================================ */
+@media (hover:hover) and (pointer:fine){
+  body.doodle-cursor-on, body.doodle-cursor-on *{ cursor:none !important; }
+
+  .doodle-cursor{
+    position:fixed; top:0; left:0; z-index:9999; pointer-events:none;
+    width:26px; height:26px; margin:-3px 0 0 -5px;
+    display:flex; align-items:center; justify-content:center;
+    transform: translate(-100px,-100px);
+    will-change: transform;
+    transition: opacity .2s ease;
+  }
+  .doodle-cursor i{
+    font-size:1.1rem; color:#fff;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,0.55));
+    transform: rotate(-40deg);
+    transition: color .18s var(--ease-soft), transform .18s var(--ease-soft);
+  }
+  .doodle-cursor.active i{ color: var(--lime); transform: rotate(-40deg) scale(1.2); }
+  .doodle-cursor.hide{ opacity:0; }
+
+  .doodle-ring{
+    position:fixed; top:0; left:0; z-index:9998; pointer-events:none;
+    width:38px; height:38px; margin:-19px 0 0 -19px;
+    border-radius:50%;
+    border:2px solid var(--lime);
+    opacity:0.85;
+    transform: translate(-100px,-100px) scale(1);
+    transition: opacity .25s ease, width .25s var(--ease-soft), height .25s var(--ease-soft),
+                margin .25s var(--ease-soft), border-color .2s ease, background .2s ease;
+    will-change: transform;
+  }
+  .doodle-ring.hide{ opacity:0; }
+  .doodle-ring.pointer{
+    width:56px; height:56px; margin:-28px 0 0 -28px;
+    background: rgba(182,245,0,0.08);
+    border-style:dashed;
+  }
+  .doodle-ring.text{
+    width:4px; height:26px; margin:-13px 0 0 -2px; border-radius:2px;
+    border-color: var(--lime); background: var(--lime);
+  }
+  .doodle-ring.click{ transform: translate(-100px,-100px) scale(0.82); }
+
+  .doodle-scribble{
+    position:fixed; top:0; left:0; z-index:9997; pointer-events:none;
+    width:30px; height:30px; margin:-15px 0 0 -15px;
+    opacity:0; transform: translate(-100px,-100px) scale(0.6) rotate(0deg);
+  }
+  .doodle-scribble.pop{
+    opacity:1;
+    animation: doodleScribblePop .5s var(--ease-soft) forwards;
+  }
+  @keyframes doodleScribblePop{
+    0%{ opacity:0.9; transform: translate(var(--dx,0),var(--dy,0)) scale(0.4) rotate(-10deg); }
+    50%{ opacity:0.8; transform: translate(var(--dx,0),var(--dy,0)) scale(1.05) rotate(8deg); }
+    100%{ opacity:0; transform: translate(var(--dx,0),var(--dy,0)) scale(1.3) rotate(14deg); }
+  }
+}
+@media (hover:none), (pointer:coarse){
+  .doodle-cursor, .doodle-ring{ display:none !important; }
+}
+@media (prefers-reduced-motion: reduce){
+  .doodle-cursor, .doodle-ring{ display:none !important; }
+  body.doodle-cursor-on, body.doodle-cursor-on *{ cursor:auto !important; }
+}
 
 </style>
 </head>
@@ -1425,6 +1682,13 @@ i[class*="fa-"]{
     <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
   </filter>
 </svg>
+
+<!-- Doodle custom cursor: hand-drawn pencil tip + wobbly trailing ring.
+     Hidden automatically on touch devices via CSS/JS feature detection. -->
+<div class="doodle-cursor" id="doodleCursor" aria-hidden="true">
+  <i class="fa-solid fa-pencil" aria-hidden="true"></i>
+</div>
+<div class="doodle-ring" id="doodleRing" aria-hidden="true"></div>
 
 <div id="loader" aria-hidden="true">
   <div class="loader-inner">
@@ -2344,11 +2608,14 @@ i[class*="fa-"]{
       <span>NoviQue Assistant</span>
     </div>
     <div class="nova-head-actions">
+      <button class="nova-head-btn" id="novaHistoryBtn" aria-label="View chat history"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i></button>
       <div class="nova-menu-wrap">
         <button class="nova-head-btn" id="novaMenuBtn" aria-label="More options" aria-haspopup="true" aria-expanded="false">
           <i class="fa-solid fa-ellipsis-vertical" aria-hidden="true"></i>
         </button>
         <div class="nova-menu" id="novaMenu" role="menu">
+          <button type="button" id="novaNewChatBtn" role="menuitem"><i class="fa-solid fa-plus" aria-hidden="true"></i> New chat</button>
+          <button type="button" id="novaHistoryMenuBtn" role="menuitem"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i> Chat history</button>
           <button type="button" id="novaClearBtn" role="menuitem"><i class="fa-solid fa-broom" aria-hidden="true"></i> Clear chat</button>
           <button type="button" id="novaCloseBtn2" role="menuitem"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Close chat</button>
         </div>
@@ -2374,6 +2641,16 @@ i[class*="fa-"]{
   </form>
 
   <div class="nova-foot">Nova can make mistakes. Built by <span>NoviQue</span> &middot; v1.0</div>
+
+  <!-- Chat history overlay: list of past saved conversations -->
+  <div class="nova-history" id="novaHistoryPanel" aria-hidden="true">
+    <div class="nova-history-head">
+      <button class="nova-history-back" id="novaHistoryBack" aria-label="Back to chat"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i></button>
+      <b>Chat history</b>
+      <button class="nova-history-new" id="novaHistoryNewBtn" type="button"><i class="fa-solid fa-plus" aria-hidden="true"></i> New</button>
+    </div>
+    <div class="nova-history-list" id="novaHistoryList"></div>
+  </div>
 </div>
 
 <script>
@@ -2818,7 +3095,7 @@ i[class*="fa-"]{
 var NOVA_CONFIG = {
     apiKey: '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',
     endpoint: 'https://openrouter.ai/api/v1/chat/completions',
-    model: 'openrouter/free',
+    model: 'openrouter/auto',
     modelFallbacks: [
       'meta-llama/llama-3.3-70b-instruct:free',
       'google/gemma-2-9b-it:free',
@@ -2849,7 +3126,8 @@ var NOVA_CONFIG = {
     'do you offer support after launch': "Yes, we offer ongoing support and maintenance after a project ships. It's worth discussing with the team so we can scope what kind of support fits your project."
   };
 
-  var STORAGE_KEY = 'nova_chat_history_v1';
+  var STORAGE_KEY = 'nova_chat_history_v1';       // legacy single-thread key, migrated on load
+  var SESSIONS_KEY = 'nova_chat_sessions_v1';      // { sessions: [ {id,title,updatedAt,messages:[]} ], activeId }
 
   var launcher = document.getElementById('novaLauncher');
   var novaWindow = document.getElementById('novaWindow');
@@ -2858,6 +3136,7 @@ var NOVA_CONFIG = {
   var menuBtn = document.getElementById('novaMenuBtn');
   var menu = document.getElementById('novaMenu');
   var clearBtn = document.getElementById('novaClearBtn');
+  var newChatBtn = document.getElementById('novaNewChatBtn');
   var body = document.getElementById('novaBody');
   var form = document.getElementById('novaForm');
   var input = document.getElementById('novaInput');
@@ -2865,20 +3144,180 @@ var NOVA_CONFIG = {
   var faqRow = document.getElementById('novaFaq');
   var dot = document.getElementById('novaDot');
 
-  var history = [];
+  var historyBtn = document.getElementById('novaHistoryBtn');
+  var historyMenuBtn = document.getElementById('novaHistoryMenuBtn');
+  var historyPanel = document.getElementById('novaHistoryPanel');
+  var historyList = document.getElementById('novaHistoryList');
+  var historyBack = document.getElementById('novaHistoryBack');
+  var historyNewBtn = document.getElementById('novaHistoryNewBtn');
+
+  var history = [];        // active session's messages: [{role, content}]
+  var sessions = [];        // all saved sessions
+  var activeId = null;
   var isOpen = false;
   var hasOpenedOnce = false;
   var isSending = false;
 
-  function loadHistory(){
+  function uid(){
+    return 's_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
+  }
+
+  function loadSessions(){
     try{
-      var raw = sessionStorage.getItem(STORAGE_KEY);
-      if(raw){ history = JSON.parse(raw); }
-    }catch(e){ history = []; }
+      var raw = localStorage.getItem(SESSIONS_KEY);
+      if(raw){
+        var parsed = JSON.parse(raw);
+        sessions = parsed.sessions || [];
+        activeId = parsed.activeId || null;
+      }
+    }catch(e){ sessions = []; activeId = null; }
+
+    // One-time migration from the old sessionStorage single-thread format,
+    // so anyone with an in-progress chat doesn't lose it.
+    if(sessions.length === 0){
+      try{
+        var legacyRaw = sessionStorage.getItem(STORAGE_KEY);
+        if(legacyRaw){
+          var legacy = JSON.parse(legacyRaw);
+          if(legacy && legacy.length){
+            var migrated = { id: uid(), title: deriveTitle(legacy), updatedAt: Date.now(), messages: legacy };
+            sessions.push(migrated);
+            activeId = migrated.id;
+          }
+        }
+      }catch(e){}
+      sessionStorage.removeItem(STORAGE_KEY);
+    }
+
+    var active = sessions.find(function(s){ return s.id === activeId; });
+    if(active){
+      history = active.messages;
+    } else {
+      startNewSession(false);
+    }
+  }
+
+  function persistSessions(){
+    try{ localStorage.setItem(SESSIONS_KEY, JSON.stringify({ sessions: sessions, activeId: activeId })); }catch(e){}
+  }
+
+  function deriveTitle(messages){
+    var firstUser = messages.find(function(m){ return m.role === 'user'; });
+    if(!firstUser) return 'New conversation';
+    var t = firstUser.content.trim().replace(/\s+/g, ' ');
+    return t.length > 42 ? t.slice(0, 42).trim() + '…' : t;
   }
 
   function saveHistory(){
-    try{ sessionStorage.setItem(STORAGE_KEY, JSON.stringify(history)); }catch(e){}
+    var active = sessions.find(function(s){ return s.id === activeId; });
+    if(!active){
+      active = { id: activeId || uid(), title: 'New conversation', updatedAt: Date.now(), messages: history };
+      activeId = active.id;
+      sessions.unshift(active);
+    }
+    active.messages = history;
+    active.updatedAt = Date.now();
+    if(history.some(function(m){ return m.role === 'user'; })){
+      active.title = deriveTitle(history);
+    }
+    // Most-recently-updated first
+    sessions.sort(function(a,b){ return b.updatedAt - a.updatedAt; });
+    persistSessions();
+  }
+
+  function startNewSession(render){
+    activeId = uid();
+    history = [];
+    var fresh = { id: activeId, title: 'New conversation', updatedAt: Date.now(), messages: [] };
+    sessions.unshift(fresh);
+    persistSessions();
+    if(render !== false){
+      renderAllHistory();
+      faqRow.style.display = 'flex';
+    }
+  }
+
+  function switchToSession(id){
+    var s = sessions.find(function(s){ return s.id === id; });
+    if(!s) return;
+    activeId = id;
+    history = s.messages;
+    persistSessions();
+    renderAllHistory();
+    faqRow.style.display = history.length ? 'none' : 'flex';
+    closeHistoryPanel();
+  }
+
+  function deleteSession(id, evt){
+    if(evt) evt.stopPropagation();
+    sessions = sessions.filter(function(s){ return s.id !== id; });
+    if(id === activeId){
+      if(sessions.length){
+        activeId = sessions[0].id;
+        history = sessions[0].messages;
+        renderAllHistory();
+      } else {
+        startNewSession(true);
+      }
+    }
+    persistSessions();
+    renderHistoryList();
+  }
+
+  function timeAgo(ts){
+    var diff = Date.now() - ts;
+    var min = Math.floor(diff/60000);
+    if(min < 1) return 'just now';
+    if(min < 60) return min + 'm ago';
+    var hr = Math.floor(min/60);
+    if(hr < 24) return hr + 'h ago';
+    var d = Math.floor(hr/24);
+    if(d < 7) return d + 'd ago';
+    return new Date(ts).toLocaleDateString();
+  }
+
+  function renderHistoryList(){
+    historyList.innerHTML = '';
+    if(sessions.length === 0){
+      var empty = document.createElement('div');
+      empty.className = 'nova-history-empty';
+      empty.innerHTML = '<i class="fa-regular fa-comments" aria-hidden="true"></i>No saved conversations yet.<br>Start chatting and it will show up here.';
+      historyList.appendChild(empty);
+      return;
+    }
+    sessions.forEach(function(s, i){
+      var lastMsg = s.messages.length ? s.messages[s.messages.length - 1] : null;
+      var item = document.createElement('button');
+      item.type = 'button';
+      item.className = 'nova-history-item';
+      item.style.animationDelay = (i * 0.04) + 's';
+      if(s.id === activeId) item.style.borderColor = 'var(--lime)';
+      item.innerHTML =
+        '<div class="nova-history-item-icon"><i class="fa-solid fa-message" aria-hidden="true"></i></div>' +
+        '<div class="nova-history-item-body">' +
+          '<div class="nova-history-item-title"></div>' +
+          '<div class="nova-history-item-preview"></div>' +
+          '<div class="nova-history-item-meta"><i class="fa-regular fa-clock" aria-hidden="true"></i><span></span></div>' +
+        '</div>' +
+        '<button type="button" class="nova-history-item-del" aria-label="Delete conversation"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>';
+      item.querySelector('.nova-history-item-title').textContent = s.title || 'New conversation';
+      item.querySelector('.nova-history-item-preview').textContent = lastMsg ? lastMsg.content : 'No messages yet';
+      item.querySelector('.nova-history-item-meta span').textContent = timeAgo(s.updatedAt) + ' · ' + s.messages.length + ' message' + (s.messages.length===1?'':'s');
+      item.addEventListener('click', function(){ switchToSession(s.id); });
+      item.querySelector('.nova-history-item-del').addEventListener('click', function(e){ deleteSession(s.id, e); });
+      historyList.appendChild(item);
+    });
+  }
+
+  function openHistoryPanel(){
+    renderHistoryList();
+    historyPanel.classList.add('show');
+    historyPanel.setAttribute('aria-hidden', 'false');
+    closeMenu();
+  }
+  function closeHistoryPanel(){
+    historyPanel.classList.remove('show');
+    historyPanel.setAttribute('aria-hidden', 'true');
   }
 
   function scrollToBottom(){
@@ -2927,12 +3366,19 @@ var NOVA_CONFIG = {
     var currentP = null;
 
     function step(){
-      if(pIndex >= paras.length){ return; }
+      if(pIndex >= paras.length){
+        var last = bubble.lastElementChild;
+        if(last){ last.classList.remove('nova-caret'); }
+        return;
+      }
       if(!currentP){
         currentP = document.createElement('p');
+        currentP.classList.add('nova-caret');
         bubble.appendChild(currentP);
         cIndex = 0;
       }
+      var prev = currentP.previousElementSibling;
+      if(prev){ prev.classList.remove('nova-caret'); }
       var para = paras[pIndex];
       var charsThisTick = 1;
       cIndex += charsThisTick;
@@ -2941,6 +3387,7 @@ var NOVA_CONFIG = {
 
       if(cIndex >= para.length){
         pIndex += 1;
+        currentP.classList.remove('nova-caret');
         currentP = null;
         if(pIndex < paras.length){
           setTimeout(step, 60);
@@ -3047,6 +3494,7 @@ var NOVA_CONFIG = {
     isSending = state;
     sendBtn.disabled = state;
     input.disabled = state;
+    sendBtn.classList.toggle('sending', state);
   }
 
   function addUserMessage(text){
@@ -3167,11 +3615,122 @@ var NOVA_CONFIG = {
     handleSend(btn.getAttribute('data-q'));
   });
 
-  loadHistory();
+  loadSessions();
   if(history.length > 0){
     dot.classList.add('show');
   }
 
+})();
+</script>
+
+<!-- ============================================
+     DOODLE CUSTOM CURSOR — engine
+     Drives the hand-drawn pencil cursor + wobbly
+     trailing ring already defined in CSS/markup.
+     Desktop, fine-pointer, motion-OK only.
+     ============================================ -->
+<script>
+(function(){
+  'use strict';
+  var canDoodle = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+    && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!canDoodle) return;
+
+  var cursor = document.getElementById('doodleCursor');
+  var ring = document.getElementById('doodleRing');
+  if(!cursor || !ring) return;
+
+  document.body.classList.add('doodle-cursor-on');
+
+  var mx = -100, my = -100;   // cursor icon target
+  var rx = -100, ry = -100;   // ring position, eased toward mx/my
+  var revealed = false;
+  var raf = null;
+
+  function setCursorTransform(){
+    cursor.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
+  }
+  function tick(){
+    rx += (mx - rx) * 0.22;
+    ry += (my - ry) * 0.22;
+    var squash = ring.classList.contains('click') ? ' scale(0.82)' : '';
+    ring.style.transform = 'translate(' + rx.toFixed(1) + 'px,' + ry.toFixed(1) + 'px)' + squash;
+    raf = requestAnimationFrame(tick);
+  }
+  raf = requestAnimationFrame(tick);
+
+  document.addEventListener('mousemove', function(e){
+    mx = e.clientX; my = e.clientY;
+    if(!revealed){
+      revealed = true;
+      cursor.classList.remove('hide');
+      ring.classList.remove('hide');
+      rx = mx; ry = my;
+    }
+    setCursorTransform();
+  }, { passive:true });
+
+  document.addEventListener('mouseleave', function(){
+    cursor.classList.add('hide');
+    ring.classList.add('hide');
+  });
+  document.addEventListener('mouseenter', function(){
+    if(revealed){ cursor.classList.remove('hide'); ring.classList.remove('hide'); }
+  });
+
+  /* Hover states: dashed ring over clickable things, thin caret over text fields */
+  var pointerSelector = 'a, button, [role="button"], .btn, summary, select, label[for], input[type="submit"], input[type="checkbox"], input[type="radio"]';
+  var textSelector = 'input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]), textarea, [contenteditable="true"]';
+  document.addEventListener('mouseover', function(e){
+    var textEl = e.target.closest(textSelector);
+    var pointerEl = !textEl && e.target.closest(pointerSelector);
+    ring.classList.toggle('text', !!textEl);
+    ring.classList.toggle('pointer', !!pointerEl);
+    cursor.classList.toggle('active', !!(textEl || pointerEl));
+  }, { passive:true });
+
+  /* Click feedback: ring squash + a little hand-drawn scribble burst */
+  var scribbles = [];
+  var POOL_SIZE = 4;
+  for(var i = 0; i < POOL_SIZE; i++){
+    var s = document.createElement('div');
+    s.className = 'doodle-scribble';
+    s.innerHTML = '<svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<path d="M4 16 Q10 3 15 16 T27 14" fill="none" stroke="#B6F500" stroke-width="2.4" stroke-linecap="round"/>' +
+      '<path d="M16 3 Q21 9 16 16 Q10 22 17 27" fill="none" stroke="#B6F500" stroke-width="2" stroke-linecap="round" opacity="0.75"/>' +
+      '</svg>';
+    document.body.appendChild(s);
+    scribbles.push(s);
+  }
+  var poolIndex = 0;
+  document.addEventListener('mousedown', function(e){
+    ring.classList.add('click');
+    cursor.classList.add('active');
+    var el = scribbles[poolIndex];
+    poolIndex = (poolIndex + 1) % POOL_SIZE;
+    el.style.setProperty('--dx', e.clientX + 'px');
+    el.style.setProperty('--dy', e.clientY + 'px');
+    el.classList.remove('pop');
+    void el.offsetWidth; // restart the CSS animation
+    el.classList.add('pop');
+  });
+  document.addEventListener('mouseup', function(e){
+    ring.classList.remove('click');
+    var textEl = e.target.closest(textSelector);
+    var pointerEl = !textEl && e.target.closest(pointerSelector);
+    cursor.classList.toggle('active', !!(textEl || pointerEl));
+  });
+
+  /* If the layout ever flips to a touch/coarse-pointer context (devtools, hybrid
+     laptops), bail out cleanly instead of leaving a dead cursor on screen. */
+  window.matchMedia('(hover: hover) and (pointer: fine)').addEventListener('change', function(e){
+    if(!e.matches){
+      cancelAnimationFrame(raf);
+      document.body.classList.remove('doodle-cursor-on');
+      cursor.classList.add('hide');
+      ring.classList.add('hide');
+    }
+  });
 })();
 </script>
 
