@@ -1604,7 +1604,7 @@ i[class*="fa-"]{
 
   .doodle-cursor{
     position:fixed; top:0; left:0; z-index:9999; pointer-events:none;
-    width:26px; height:26px; margin:-3px 0 0 -5px;
+    width:26px; height:26px; margin:-19px 0 0 -6px;
     display:flex; align-items:center; justify-content:center;
     transform: translate(-100px,-100px);
     will-change: transform;
@@ -1613,10 +1613,11 @@ i[class*="fa-"]{
   .doodle-cursor i{
     font-size:1.1rem; color:#fff;
     filter: drop-shadow(0 1px 3px rgba(0,0,0,0.55));
-    transform: rotate(-40deg);
+    transform-origin: 25% 75%;
+    transform: rotate(-6deg);
     transition: color .18s var(--ease-soft), transform .18s var(--ease-soft);
   }
-  .doodle-cursor.active i{ color: var(--lime); transform: rotate(-40deg) scale(1.2); }
+  .doodle-cursor.active i{ color: var(--lime); transform: rotate(-6deg) scale(1.18); }
   .doodle-cursor.hide{ opacity:0; }
 
   .doodle-ring{
