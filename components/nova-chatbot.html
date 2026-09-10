@@ -1,0 +1,89 @@
+<!--
+  COMPONENT: Nova Chatbot Widget
+  ============================================
+  Reference copy of the Nova AI chat widget markup used in index.html
+  (launcher button, chat window, message list, FAQ quick-replies, input
+  form, and the chat-history side panel).
+
+  Depends on:
+    - assets/css/style.css        (.nova-*)
+    - assets/js/nova-chatbot.js   (all behavior: open/close, sending
+                                    messages, localStorage-backed chat
+                                    sessions, FAQ short-circuit answers,
+                                    OpenRouter API calls with model
+                                    fallbacks)
+    - assets/js/nova-config.js    (optional, gitignored — your own
+                                    OpenRouter API key; see
+                                    assets/js/nova-config.example.js
+                                    and README.md "Nova chatbot setup")
+    - Font Awesome                 for icons
+
+  IMPORTANT: no API key is committed to this repository (a real key
+  must never be committed to a public repo). Without
+  assets/js/nova-config.js, Nova still works and answers the built-in
+  FAQ quick-replies, but free-form questions fall back to
+  a "live chat isn't connected yet" message. See README.md ->
+  "Nova chatbot setup" to wire up your own OpenRouter key.
+-->
+<!-- ============ NOVA CHATBOT WIDGET ============ -->
+<button class="nova-launcher" id="novaLauncher" aria-label="Open chat with Nova" aria-expanded="false">
+  <span class="nova-dot" id="novaDot"></span>
+  <i class="fa-solid fa-comment-dots nova-icon-chat" aria-hidden="true"></i>
+  <i class="fa-solid fa-xmark nova-icon-close" aria-hidden="true"></i>
+</button>
+
+<div class="nova-window" id="novaWindow" role="dialog" aria-label="Nova chat assistant" aria-hidden="true">
+  <div class="nova-head">
+    <div class="nova-head-avatar">
+      <i class="fa-solid fa-seedling" aria-hidden="true"></i>
+      <span class="nova-head-status" aria-hidden="true"></span>
+    </div>
+    <div class="nova-head-info">
+      <b>Nova</b>
+      <span>NoviQue Assistant</span>
+    </div>
+    <div class="nova-head-actions">
+      <button class="nova-head-btn" id="novaHistoryBtn" aria-label="View chat history"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i></button>
+      <div class="nova-menu-wrap">
+        <button class="nova-head-btn" id="novaMenuBtn" aria-label="More options" aria-haspopup="true" aria-expanded="false">
+          <i class="fa-solid fa-ellipsis-vertical" aria-hidden="true"></i>
+        </button>
+        <div class="nova-menu" id="novaMenu" role="menu">
+          <button type="button" id="novaNewChatBtn" role="menuitem"><i class="fa-solid fa-plus" aria-hidden="true"></i> New chat</button>
+          <button type="button" id="novaHistoryMenuBtn" role="menuitem"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i> Chat history</button>
+          <button type="button" id="novaClearBtn" role="menuitem"><i class="fa-solid fa-broom" aria-hidden="true"></i> Clear chat</button>
+          <button type="button" id="novaCloseBtn2" role="menuitem"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Close chat</button>
+        </div>
+      </div>
+      <button class="nova-head-btn" id="novaCloseBtn" aria-label="Close chat"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <div class="nova-body" id="novaBody"></div>
+
+  <div class="nova-faq" id="novaFaq">
+    <button type="button" data-q="What services do you offer?">Services</button>
+    <button type="button" data-q="How much does a project cost?">Pricing</button>
+    <button type="button" data-q="How long does a project take?">Timeline</button>
+    <button type="button" data-q="How do I start a project with you?">Get started</button>
+  </div>
+
+  <form class="nova-input-row" id="novaForm">
+    <textarea id="novaInput" placeholder="Message Nova..." rows="1" maxlength="1000"></textarea>
+    <button type="submit" class="nova-send" id="novaSend" aria-label="Send message">
+      <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+    </button>
+  </form>
+
+  <div class="nova-foot">Nova can make mistakes. Built by <span>NoviQue</span> &middot; v1.0</div>
+
+  <!-- Chat history overlay: list of past saved conversations -->
+  <div class="nova-history" id="novaHistoryPanel" aria-hidden="true">
+    <div class="nova-history-head">
+      <button class="nova-history-back" id="novaHistoryBack" aria-label="Back to chat"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i></button>
+      <b>Chat history</b>
+      <button class="nova-history-new" id="novaHistoryNewBtn" type="button"><i class="fa-solid fa-plus" aria-hidden="true"></i> New</button>
+    </div>
+    <div class="nova-history-list" id="novaHistoryList"></div>
+  </div>
+</div>

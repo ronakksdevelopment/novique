@@ -1,0 +1,48 @@
+<!--
+  COMPONENT: Site Header / Primary Navigation
+  ============================================
+  This is a reference copy of the header markup used in index.html.
+
+  Plain HTML/CSS/JS has no native "include" mechanism without a build
+  step or server-side templating, so this exact markup is inlined at
+  the top of the <body> in index.html (and would be inlined the same
+  way at the top of any additional page you add under pages/).
+
+  If you introduce a static-site build step later (11ty, Astro, a
+  simple Node include script, server-side includes, etc.), this file
+  is the single source of truth to wire up as a partial/include so the
+  header only has to be edited in one place.
+
+  Depends on:
+    - assets/css/style.css       (.navbar, .nav-inner, .nav-logo, .nav-links, .nav-cta, .nav-toggle, .btn)
+    - assets/js/main.js          (navbar scroll state, mobile nav toggle, active-link close-on-click)
+    - Font Awesome (loaded via CDN in <head>) for the icons
+    - favicon/*                  (nav-logo-mark references assets/images/logo.png locally)
+-->
+<header class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="#main" class="nav-logo" aria-label="NoviQue, Home">
+      <img src="assets/images/logo.png" alt="" class="nav-logo-mark">
+      <span class="nav-logo-text">NoviQue</span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Primary">
+      <a href="#main">Home</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#about">About</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+      <a href="#contact" class="btn btn-primary mobile-cta">Start Project <i class="fa-solid fa-arrow-right fa-shake" aria-hidden="true"></i></a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-primary">Start Project <i class="fa-solid fa-arrow-right fa-shake" aria-hidden="true"></i></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
+        <i class="fa-solid fa-bars nav-toggle-icon icon-open" aria-hidden="true"></i>
+        <i class="fa-solid fa-xmark nav-toggle-icon icon-close" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</header>

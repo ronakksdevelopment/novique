@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Services | NoviQue - Designed to Inspire</title>
+<meta name="description" content="Website design, development, mobile app design, UI/UX, branding, AI solutions, digital marketing, SEO and custom software — full-spectrum digital craft under one studio.">
+<meta name="keywords" content="digital agency, web design, web development, UI UX design, branding, mobile app design, AI solutions, SEO, digital marketing">
+<meta name="author" content="NoviQue">
+<meta name="theme-color" content="#1A1A19">
+
+<!-- PWA: installable, works offline -->
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NoviQue">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="NoviQue - Designed to Inspire">
+<meta property="og:description" content="An independent design studio crafting thoughtful websites, apps, UI/UX and branding for growing brands.">
+<meta property="og:image" content="../assets/images/banner-og.png">
+<meta property="og:url" content="https://novique.design/pages/services.html">
+<meta property="og:site_name" content="NoviQue">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NoviQue - Designed to Inspire">
+<meta name="twitter:description" content="An independent design studio crafting thoughtful websites, apps, UI/UX and branding for growing brands.">
+<meta name="twitter:image" content="../assets/images/banner-og.png">
+
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="../favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../favicon/android-chrome-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-touch-icon.png">
+<link rel="canonical" href="https://novique.design/pages/services.html">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+<!-- Spline 3D Viewer (web component, loaded async so it never blocks first paint) -->
+<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js" async></script>
+
+<!-- Stylesheet (extracted from original inline <style>) -->
+<link rel="stylesheet" href="../assets/css/style.css">
+<!-- App shell: bottom tab bar / top nav, currency switcher, Members/Store page styles -->
+<link rel="stylesheet" href="../assets/css/shell.css">
+</head>
+<body data-page="services">
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- Hand-drawn "whiteboard marker" distortion filters for all Font Awesome icons -->
+<svg class="icon-sketch-defs" aria-hidden="true" focusable="false">
+  <filter id="sketchWobble" x="-30%" y="-30%" width="160%" height="160%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.045 0.09" numOctaves="2" seed="7" result="noise"></feTurbulence>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.6" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+  </filter>
+  <!-- lighter, non-animated variant for prefers-reduced-motion contexts -->
+  <filter id="sketchWobbleStatic" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.05 0.09" numOctaves="1" seed="3" result="noise"></feTurbulence>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+  </filter>
+</svg>
+
+<!-- Doodle custom cursor: hand-drawn pencil tip + wobbly trailing ring.
+     Hidden automatically on touch devices via CSS/JS feature detection. -->
+<div class="doodle-cursor" id="doodleCursor" aria-hidden="true">
+  <i class="fa-solid fa-pencil" aria-hidden="true"></i>
+</div>
+<div class="doodle-ring" id="doodleRing" aria-hidden="true"></div>
+
+<div id="loader" aria-hidden="true">
+  <div class="loader-inner">
+    <img src="../assets/images/logo.png" alt="" class="loader-logo">
+    <div class="loader-bar"></div>
+    <span class="loader-text">Designed to Inspire</span>
+  </div>
+</div>
+
+<header class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="../index.html" class="nav-logo" aria-label="NoviQue, Home">
+      <img src="../assets/images/logo.png" alt="" class="nav-logo-mark">
+      <span class="nav-logo-text">NoviQue</span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Primary">
+      <a href="../index.html" data-nav-page="home">Home</a>
+      <a href="services.html" data-nav-page="services">Services</a>
+      <a href="portfolio.html" data-nav-page="portfolio">Portfolio</a>
+      <a href="pricing.html" data-nav-page="pricing">Pricing</a>
+      <a href="process.html" data-nav-page="process">Process</a>
+      <a href="about.html" data-nav-page="about">About</a>
+      <a href="reviews.html" data-nav-page="reviews">Reviews</a>
+      <a href="faq.html" data-nav-page="faq">FAQ</a>
+      <a href="members.html" data-nav-page="members">Members</a>
+      <a href="store.html" data-nav-page="store">Store</a>
+      <a href="contact.html" data-nav-page="contact">Contact</a>
+      <a href="contact.html" class="btn btn-primary mobile-cta">Start Project <i class="fa-solid fa-arrow-right fa-shake" aria-hidden="true"></i></a>
+    </nav>
+    <div class="nav-cta">
+      <a href="contact.html" class="btn btn-primary">Start Project <i class="fa-solid fa-arrow-right fa-shake" aria-hidden="true"></i></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
+        <i class="fa-solid fa-bars nav-toggle-icon icon-open" aria-hidden="true"></i>
+        <i class="fa-solid fa-xmark nav-toggle-icon icon-close" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+
+<main id="main">
+
+<section class="page-hero" aria-label="Services">
+  <div class="container">
+    <span class="eyebrow">What We Do</span>
+    <h1>Full-spectrum digital craft, under one studio.</h1>
+    <p>From first sketch to shipped product, we cover every discipline needed to launch a brand that performs: strategically, visually, and technically.</p>
+  </div>
+</section>
+<section class="services" id="services" aria-label="Services">
+  <div class="container">
+    <div class="services-grid stagger">
+      <div class="service-card reveal" style="--i:0">
+        <span class="service-num">01</span>
+        <div class="service-icon"><i class="fa-solid fa-pen-ruler fa-shake" aria-hidden="true"></i></div>
+        <h3>Website Design</h3>
+        <p>Bespoke, conversion-focused websites that reflect your brand's ambition, from marketing sites to complex web platforms.</p>
+        <div class="service-tags"><span>Figma</span><span>Design Systems</span><span>Responsive</span></div>
+      </div>
+      <div class="service-card reveal" style="--i:1">
+        <span class="service-num">02</span>
+        <div class="service-icon"><i class="fa-solid fa-code fa-beat" aria-hidden="true"></i></div>
+        <h3>Web Development</h3>
+        <p>Fast, scalable front and back-end builds using modern frameworks, headless CMS, and rock-solid architecture.</p>
+        <div class="service-tags"><span>React</span><span>Next.js</span><span>Headless CMS</span></div>
+      </div>
+      <div class="service-card reveal" style="--i:2">
+        <span class="service-num">03</span>
+        <div class="service-icon"><i class="fa-solid fa-mobile-screen-button fa-bounce" aria-hidden="true"></i></div>
+        <h3>Mobile App Design</h3>
+        <p>Native and cross-platform app experiences engineered for delight, retention, and App Store-ready polish.</p>
+        <div class="service-tags"><span>iOS</span><span>Android</span><span>Prototyping</span></div>
+      </div>
+      <div class="service-card reveal" style="--i:3">
+        <span class="service-num">04</span>
+        <div class="service-icon"><i class="fa-solid fa-layer-group fa-fade" aria-hidden="true"></i></div>
+        <h3>UI/UX Design</h3>
+        <p>Research-driven interface design that balances aesthetics with usability, validated through real user testing.</p>
+        <div class="service-tags"><span>User Research</span><span>Wireframes</span><span>Motion</span></div>
+      </div>
+      <div class="service-card reveal" style="--i:4">
+        <span class="service-num">05</span>
+        <div class="service-icon"><i class="fa-solid fa-palette fa-shake" aria-hidden="true"></i></div>
+        <h3>Branding</h3>
+        <p>Identity systems: logo, typography, voice, and visual language, built to travel across every touchpoint.</p>
+        <div class="service-tags"><span>Identity</span><span>Strategy</span><span>Guidelines</span></div>
+      </div>
+      <div class="service-card reveal" style="--i:5">
+        <span class="service-num">06</span>
+        <div class="service-icon"><i class="fa-solid fa-brain fa-beat" aria-hidden="true"></i></div>
+        <h3>AI Solutions</h3>
+        <p>Custom AI integrations, intelligent automations, and LLM-powered features embedded directly into your product.</p>
+        <div class="service-tags"><span>LLM Integration</span><span>Automation</span><span>Copilots</span></div>
+      </div>
+      <div class="service-card reveal" style="--i:6">
+        <span class="service-num">07</span>
+        <div class="service-icon"><i class="fa-solid fa-bullhorn fa-bounce" aria-hidden="true"></i></div>
+        <h3>Digital Marketing</h3>
+        <p>Performance campaigns across paid, social, and email, engineered around funnels that actually convert.</p>
+        <div class="service-tags"><span>Paid Media</span><span>Email</span><span>Analytics</span></div>
+      </div>
+      <div class="service-card reveal" style="--i:7">
+        <span class="service-num">08</span>
+        <div class="service-icon"><i class="fa-solid fa-magnifying-glass-chart fa-fade" aria-hidden="true"></i></div>
+        <h3>SEO</h3>
+        <p>Technical and content SEO that compounds, built for organic growth that outlasts any single campaign.</p>
+        <div class="service-tags"><span>Technical SEO</span><span>Content</span><span>Link Building</span></div>
+      </div>
+      <div class="service-card reveal" style="--i:8">
+        <span class="service-num">09</span>
+        <div class="service-icon"><i class="fa-solid fa-cubes fa-spin" aria-hidden="true"></i></div>
+        <h3>Custom Software</h3>
+        <p>Internal tools, SaaS platforms, and complex web applications engineered for scale and long-term maintainability.</p>
+        <div class="service-tags"><span>SaaS</span><span>APIs</span><span>Cloud</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer" aria-label="Site footer">
+  <div class="brand-watermark" aria-hidden="true"><img src="../assets/images/banner.png" alt=""></div>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-brand-logo">
+          <img src="../assets/images/logo.png" alt="">
+          <span>NoviQue</span>
+        </div>
+        <p>An independent design studio crafting thoughtful websites, apps and brand experiences: designed to inspire, engineered to perform.</p>
+        <img src="../assets/images/banner.png" alt="NoviQue, Designed to Inspire" class="footer-banner">
+        <ul class="footer-contact-lines">
+          <li><a href="mailto:ronakksdevelopment@gmail.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i> ronakksdevelopment@gmail.com</a></li>
+          <li><a href="tel:+919366915733"><i class="fa-solid fa-phone" aria-hidden="true"></i> +91 93669 15733</a></li>
+          <li><a href="https://wa.me/917005966672" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> +91 70059 66672</a></li>
+        </ul>
+        <div class="contact-social">
+          <a href="https://instagram.com/novique.design" target="_blank" rel="noopener" aria-label="NoviQue on Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+          <a href="#" aria-label="NoviQue on LinkedIn"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+          <a href="#" aria-label="NoviQue on X"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+          <a href="#" aria-label="NoviQue on Dribbble"><i class="fa-brands fa-dribbble" aria-hidden="true"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Explore</h5>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="process.html">Process</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="services.html">Website Design</a></li>
+          <li><a href="services.html">Web Development</a></li>
+          <li><a href="services.html">Mobile App Design</a></li>
+          <li><a href="services.html">UI/UX Design</a></li>
+          <li><a href="services.html">Branding</a></li>
+          <li><a href="services.html">AI Solutions</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+          <li><a href="#">Sitemap</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 NoviQue Studio. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="backToTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up fa-bounce" aria-hidden="true"></i></button>
+
+<!-- ============ CUSTOM RIGHT-CLICK CONTEXT MENU ============ -->
+<div class="custom-context-menu" id="customContextMenu" role="menu" aria-hidden="true">
+  <div class="ccm-brand">
+    <img src="../assets/images/logo.png" alt="">
+    <span>NoviQue</span>
+  </div>
+  <ul class="ccm-list">
+    <li><button class="ccm-item" data-action="home" role="menuitem"><i class="fa-solid fa-house" aria-hidden="true"></i> Go to Home</button></li>
+    <li><button class="ccm-item" data-action="portfolio" role="menuitem"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> View Portfolio</button></li>
+    <li><button class="ccm-item" data-action="contact" role="menuitem"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Start a Project</button></li>
+    <li class="ccm-divider" role="separator"></li>
+    <li><button class="ccm-item" data-action="copy-link" role="menuitem"><i class="fa-solid fa-link" aria-hidden="true"></i> Copy Page Link</button></li>
+    <li><button class="ccm-item" data-action="reload" role="menuitem"><i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i> Reload Page</button></li>
+    <li class="ccm-divider" role="separator"></li>
+    <li><button class="ccm-item" data-action="top" role="menuitem"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i> Back to Top</button></li>
+  </ul>
+</div>
+<div class="ccm-toast" id="ccmToast"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> <span id="ccmToastText">Done</span></div>
+
+<!-- ============ NOVA CHATBOT WIDGET ============ -->
+<button class="nova-launcher" id="novaLauncher" aria-label="Open chat with Nova" aria-expanded="false">
+  <span class="nova-dot" id="novaDot"></span>
+  <i class="fa-solid fa-comment-dots nova-icon-chat" aria-hidden="true"></i>
+  <i class="fa-solid fa-xmark nova-icon-close" aria-hidden="true"></i>
+</button>
+
+<div class="nova-window" id="novaWindow" role="dialog" aria-label="Nova chat assistant" aria-hidden="true">
+  <div class="nova-head">
+    <div class="nova-head-avatar">
+      <i class="fa-solid fa-seedling" aria-hidden="true"></i>
+      <span class="nova-head-status" aria-hidden="true"></span>
+    </div>
+    <div class="nova-head-info">
+      <b>Nova</b>
+      <span>NoviQue Assistant</span>
+    </div>
+    <div class="nova-head-actions">
+      <button class="nova-head-btn" id="novaHistoryBtn" aria-label="View chat history"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i></button>
+      <div class="nova-menu-wrap">
+        <button class="nova-head-btn" id="novaMenuBtn" aria-label="More options" aria-haspopup="true" aria-expanded="false">
+          <i class="fa-solid fa-ellipsis-vertical" aria-hidden="true"></i>
+        </button>
+        <div class="nova-menu" id="novaMenu" role="menu">
+          <button type="button" id="novaNewChatBtn" role="menuitem"><i class="fa-solid fa-plus" aria-hidden="true"></i> New chat</button>
+          <button type="button" id="novaHistoryMenuBtn" role="menuitem"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i> Chat history</button>
+          <button type="button" id="novaClearBtn" role="menuitem"><i class="fa-solid fa-broom" aria-hidden="true"></i> Clear chat</button>
+          <button type="button" id="novaCloseBtn2" role="menuitem"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Close chat</button>
+        </div>
+      </div>
+      <button class="nova-head-btn" id="novaCloseBtn" aria-label="Close chat"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+  <div class="nova-body" id="novaBody"></div>
+
+  <div class="nova-faq" id="novaFaq">
+    <button type="button" data-q="What services do you offer?">Services</button>
+    <button type="button" data-q="How much does a project cost?">Pricing</button>
+    <button type="button" data-q="How long does a project take?">Timeline</button>
+    <button type="button" data-q="How do I start a project with you?">Get started</button>
+  </div>
+
+  <form class="nova-input-row" id="novaForm">
+    <textarea id="novaInput" placeholder="Message Nova..." rows="1" maxlength="1000"></textarea>
+    <button type="submit" class="nova-send" id="novaSend" aria-label="Send message">
+      <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+    </button>
+  </form>
+
+  <div class="nova-foot">Nova can make mistakes. Built by <span>NoviQue</span> &middot; v1.0</div>
+
+  <!-- Chat history overlay: list of past saved conversations -->
+  <div class="nova-history" id="novaHistoryPanel" aria-hidden="true">
+    <div class="nova-history-head">
+      <button class="nova-history-back" id="novaHistoryBack" aria-label="Back to chat"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i></button>
+      <b>Chat history</b>
+      <button class="nova-history-new" id="novaHistoryNewBtn" type="button"><i class="fa-solid fa-plus" aria-hidden="true"></i> New</button>
+    </div>
+    <div class="nova-history-list" id="novaHistoryList"></div>
+  </div>
+</div>
+
+
+<nav class="tab-bar" aria-label="Primary (mobile)">
+  <div class="tab-bar-scroll">
+      <a href="../index.html" class="tab-item" data-nav-page="home">
+        <i class="fa-solid fa-house" aria-hidden="true"></i>
+        <span>Home</span>
+      </a>
+      <a href="services.html" class="tab-item" data-nav-page="services">
+        <i class="fa-solid fa-pen-ruler" aria-hidden="true"></i>
+        <span>Services</span>
+      </a>
+      <a href="portfolio.html" class="tab-item" data-nav-page="portfolio">
+        <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+        <span>Portfolio</span>
+      </a>
+      <a href="pricing.html" class="tab-item" data-nav-page="pricing">
+        <i class="fa-solid fa-tag" aria-hidden="true"></i>
+        <span>Pricing</span>
+      </a>
+      <a href="process.html" class="tab-item" data-nav-page="process">
+        <i class="fa-solid fa-route" aria-hidden="true"></i>
+        <span>Process</span>
+      </a>
+      <a href="about.html" class="tab-item" data-nav-page="about">
+        <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+        <span>About</span>
+      </a>
+      <a href="reviews.html" class="tab-item" data-nav-page="reviews">
+        <i class="fa-solid fa-star" aria-hidden="true"></i>
+        <span>Reviews</span>
+      </a>
+      <a href="faq.html" class="tab-item" data-nav-page="faq">
+        <i class="fa-solid fa-circle-question" aria-hidden="true"></i>
+        <span>FAQ</span>
+      </a>
+      <a href="members.html" class="tab-item" data-nav-page="members">
+        <i class="fa-solid fa-users" aria-hidden="true"></i>
+        <span>Members</span>
+      </a>
+      <a href="store.html" class="tab-item" data-nav-page="store">
+        <i class="fa-solid fa-shop" aria-hidden="true"></i>
+        <span>Store</span>
+      </a>
+      <a href="contact.html" class="tab-item" data-nav-page="contact">
+        <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+        <span>Contact</span>
+      </a>
+  </div>
+</nav>
+
+<div class="install-banner" id="installBanner">
+  <i class="fa-solid fa-arrow-down-to-line" aria-hidden="true"></i>
+  <div class="install-banner-text"><b>Install NoviQue</b>Add the app to your home screen for offline access.</div>
+  <div class="install-banner-actions">
+    <button type="button" class="install-banner-install" id="installBannerInstall">Install</button>
+    <button type="button" class="install-banner-dismiss" id="installBannerDismiss" aria-label="Dismiss">Not now</button>
+  </div>
+</div>
+
+<!-- Scripts (extracted from original inline <script> blocks) -->
+<script src="../assets/js/shell.js"></script>
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/nova-config.js" onerror="this.remove()"></script>
+<script src="../assets/js/nova-chatbot.js"></script>
+<script src="../assets/js/doodle-cursor.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Dependencies (only relevant if you later add a build step / tooling)
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build output (only relevant if you later add a build step)
+dist/
+build/
+.cache/
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+
+# Nova chatbot: local API key config (see assets/js/nova-config.example.js)
+assets/js/nova-config.js
+
+# Archives from the original handoff
+*.zip
