@@ -27,7 +27,7 @@
    ============================================ */
 
 window.NOVA_USER_CONFIG = {
-  apiKey: 'YOUR_OPENROUTER_API_KEY_HERE',
+  apiKey: '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',
   endpoint: 'https://openrouter.ai/api/v1/chat/completions',
   model: 'openrouter/free',
   modelFallbacks: [
