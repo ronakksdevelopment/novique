@@ -29,7 +29,7 @@
 window.NOVA_USER_CONFIG = {
   apiKey: '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',
   endpoint: 'https://openrouter.ai/api/v1/chat/completions',
-  model: 'inclusionai/ling-3.0-flash-vl',
+  model: 'openrouter/free',
   modelFallbacks: [
     'tencent/hy3:free',
     'poolside/laguna-xs-2.1:free',
